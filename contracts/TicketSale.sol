@@ -13,15 +13,13 @@ contract TicketSale is Pausable {
     address contractOwner = msg.sender;
     address tokenSeller;
     ERC721 public nftAddress;
-    uint256 public currentPrice;
+    uint256 public currentPrice = 10*(10**18);
 
-    constructor(address _nftAddress, address _tokenSeller, uint256 _currentPrice) {
+    constructor(address _nftAddress, address _tokenSeller) {
         require(_nftAddress != address(0) && _nftAddress != address(this));
         require(_tokenSeller != address(0) && _tokenSeller != address(this));
-        require(_currentPrice > 0);
         tokenSeller = _tokenSeller;
         nftAddress = ERC721(_nftAddress);
-        currentPrice = _currentPrice;
     }
 
     modifier onlyOwner() {

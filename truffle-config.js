@@ -51,8 +51,8 @@ module.exports = {
    * run `develop` or `test`. You can ask a truffle command to use a specific
    * network from the command line, e.g
    *
-   * $ truffle test --network <network-name>
-   * $ truffle.cmd migrate --network <network-name>
+   * $ truffle test --network testnet
+   * $ truffle.cmd migrate --network testnet --reset
    */
 
   networks: {

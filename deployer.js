@@ -9,10 +9,9 @@ module.exports = function(deployer) {
 
 //deploy 2
 var TicketSale = artifacts.require("TicketSale");
-var nftAddress;
+var nftAddress = "0x7859D2a557E944a023DC3ADa594B3CeCbB8dc388";
 var tokenSeller = "0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D";
-var currentPrice = 10*(10**18);
 
 module.exports = function(deployer) {
-  deployer.deploy(TicketSale, nftAddress, tokenSeller, currentPrice);
+  deployer.deploy(TicketSale, nftAddress, tokenSeller);
 };
