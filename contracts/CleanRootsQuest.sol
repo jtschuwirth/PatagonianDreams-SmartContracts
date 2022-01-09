@@ -7,16 +7,18 @@ import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract CleanRootsQuest {
 
     event StartQuest(uint treeId);
-    event FinishQuest(uint treeId);
+    event CompleteQuest(uint treeId);
     event CancelQuest(uint treeId);
 
     address ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
+    address Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
     
     //Get TreeAddress after TreeContract Deployment
-    address TreeAddress = address(0);
+    address TreeAddress = 0x190460adF29CD8FA28B537a8E403cb36C0fc84cC;
     
-    address Token = 0x70b3F9216A1600268146efC35944Efb376F4c4fc;
-    address Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
+    //Get TokenAddress after TokenContract Deployment
+    address Token = 0xCd571eD43B347a4Ab01BAe2d23F9535BBAFe955d;
+
     Tree tree = Tree(TreeAddress);
 
     modifier onlyOwnerOf(uint _treeId) {
@@ -38,7 +40,7 @@ contract CleanRootsQuest {
         emit StartQuest(treeId);
     }
 
-    function finishQuest(uint treeId) public payable onlyOwnerOf(treeId) {
+    function completeQuest(uint treeId) public payable onlyOwnerOf(treeId) {
         require(tree.questStatus(treeId) != 0);
         require(block.timestamp >= tree.questStatus(treeId));
         uint expReward = 10;
@@ -46,7 +48,7 @@ contract CleanRootsQuest {
         tree.gainExp(treeId, expReward);
         tree.updateQuestStatus(treeId, 0);
         IERC20(Token).transferFrom(Treasury, msg.sender, tokenReward);
-        emit FinishQuest(treeId);
+        emit CompleteQuest(treeId);
 
     }
 

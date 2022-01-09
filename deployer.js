@@ -1,10 +1,9 @@
-
-//deploy 1
-var Ticket = artifacts.require("Ticket");
+var Token = artifacts.require("Token");
 
 module.exports = function(deployer) {
-  deployer.deploy(Ticket);
+  deployer.deploy(Token);
 };
+
 
 var Tree = artifacts.require("Tree");
 
@@ -12,11 +11,16 @@ module.exports = function(deployer) {
   deployer.deploy(Tree);
 };
 
-var Token = artifacts.require("Token");
+var CleanRootsQuest = artifacts.require("CleanRootsQuest");
 
 module.exports = function(deployer) {
-  deployer.deploy(Token);
+  deployer.deploy(CleanRootsQuest);
 };
+
+
+
+
+
 
 
 //deploy 2

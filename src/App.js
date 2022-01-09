@@ -13,6 +13,11 @@ var TokenABI = TokenJson["abi"];
 var TokenAddress = TokenJson["networks"]["2"]["address"];
 var TokenContract = new web3.eth.Contract(TokenABI, TokenAddress);
 
+var QuestJson = require("../build/contracts/CleanRootsQuest.json");
+var QuestABI = QuestJson["abi"];
+var QuestAddress = QuestJson["networks"]["2"]["address"];
+var QuestContract = new web3.eth.Contract(QuestABI, QuestAddress);
+
 function App() {
     const [Address, setAddress] = useState(null);
 
@@ -51,17 +56,9 @@ function App() {
         }
     }
 
-    async function gainExp() {
+    async function gainLevel(id) {
         try {
-            await TreeContract.methods.gainExp(0, 100).send({from: Address})
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    async function gainLevel() {
-        try {
-            await TreeContract.methods.gainLevel(0).send({from: Address})
+            await TreeContract.methods.gainLevel(id).send({from: Address})
         } catch (error) {
             console.error(error);
         }
@@ -86,6 +83,38 @@ function App() {
         }
     }
 
+    async function changeQuestAddress() {
+        try {
+            await TreeContract.methods.transferQuestContract(QuestAddress).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function startQuest(id) {
+        try {
+            await QuestContract.methods.startQuest(id).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function completeQuest(id) {
+        try {
+            await QuestContract.methods.completeQuest(id).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function cancelQuest(id) {
+        try {
+            await QuestContract.methods.cancelQuest(id).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
         isMetaMaskConnected().then((connected) => {
             if (connected) {
@@ -102,11 +131,20 @@ function App() {
         <div>
             <div>{Address}</div>
             <div>
-                <button onClick={ () => connectMetaMask()}>Connect Metamask</button>
-                <button onClick={ () => buyNewTree()}>Buy new Tree</button>
-                <button onClick={ () => gainExp()}>Gain Exp</button>
-                <button onClick={ () => approveToken()}>Approve Token use</button>
-                <button onClick={ () => gainLevel()}>Gain Level</button>
+                <div>
+                    <button onClick={ () => connectMetaMask()}>Connect Metamask</button>
+                    <button onClick={ () => buyNewTree()}>Buy new Tree</button>
+                    <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
+                </div>
+                <div>
+                    <button onClick={ () => startQuest(0)}>Start Quest</button>
+                    <button onClick={ () => completeQuest(0)}>Complete Quest</button>
+                    <button onClick={ () => cancelQuest(0)}>Cancel Quest</button>
+                </div>
+                <div>
+                    <button onClick={ () => approveToken()}>Approve Token use</button>
+                    <button onClick={ () => gainLevel(0)}>Gain Level</button>
+                </div>
             </div>
         </div>
     )

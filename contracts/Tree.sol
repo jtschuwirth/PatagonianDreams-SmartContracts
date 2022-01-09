@@ -16,7 +16,7 @@ contract Tree is ERC721 {
     address ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
     
     //Get Token Address after TokenContract deployment
-    address Token = 0x70b3F9216A1600268146efC35944Efb376F4c4fc;
+    address Token = 0xCd571eD43B347a4Ab01BAe2d23F9535BBAFe955d;
     
     //QuestContract is updated after deployment
     address QuestContract = address(0);

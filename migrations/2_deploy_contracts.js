@@ -1,5 +1,7 @@
-var Tree = artifacts.require("Tree");
+//truffle.cmd migrate --network testnet --reset
+
+var CleanRootsQuest = artifacts.require("CleanRootsQuest");
 
 module.exports = function(deployer) {
-  deployer.deploy(Tree);
+  deployer.deploy(CleanRootsQuest);
 };
