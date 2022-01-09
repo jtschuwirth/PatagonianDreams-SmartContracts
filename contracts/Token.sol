@@ -7,15 +7,17 @@ import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Token is ERC20 {
 
-    address contractOwner = msg.sender;
+    address ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
     address TestAddress = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
+    address Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
 
     constructor() ERC20("Token Patagonia Test", "TPT") {
-        _mint(TestAddress, 4000000*10**18);
+        _mint(TestAddress, 100*10**18);
+        _mint(Treasury, 4000000*10**18);
     }
 
     modifier onlyOwner() {
-        require(contractOwner == msg.sender);
+        require(ContractOwner == msg.sender);
         _;
     }
 
@@ -24,6 +26,6 @@ contract Token is ERC20 {
     }
 
     function transferOwnership(address newOwner) public payable onlyOwner() {
-        contractOwner = newOwner;
+        ContractOwner = newOwner;
     }
 }

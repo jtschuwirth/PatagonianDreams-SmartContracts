@@ -13,20 +13,28 @@ contract Tree is ERC721 {
     uint Nonce = 1;
     uint Digits = 16;
     uint Modulus = 10 ** Digits;
-    address ContractOwner = msg.sender;
+    address ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
+    
+    //Get Token Address after TokenContract deployment
     address Token = 0x70b3F9216A1600268146efC35944Efb376F4c4fc;
+    
+    //QuestContract is updated after deployment
+    address QuestContract = address(0);
 
     struct TreeStruct {
         uint treeDNA;
         uint level;
         uint exp;
-        bool inMission;
+        uint onQuestUntil;
     }
 
     TreeStruct[] public trees;
 
-    constructor() ERC721("TREE", "Tree") { 
+    constructor() ERC721("TREE", "Tree") {
     }
+
+
+    //Modifiers
 
     modifier onlyOwnerOf(uint _treeId) {
         require(ownerOf(_treeId) == msg.sender);
@@ -38,11 +46,12 @@ contract Tree is ERC721 {
         _;
     }
 
-    function gainExp(uint treeId, uint amount) public payable onlyOwnerOf(treeId) {
-        //Cambiar a que solo lo pueda hacer el contrato de quests y no el usuario
-        trees[treeId].exp = trees[treeId].exp + amount;
-        emit GainExp(treeId, amount);
+    modifier onlyQuestContract() {
+        require(QuestContract == msg.sender);
+        _;
     }
+
+    //View Functions
 
     function neededExp(uint treeId) public view returns (uint) {
         return trees[treeId].level*100;
@@ -50,6 +59,27 @@ contract Tree is ERC721 {
 
     function neededAmount(uint treeId) public view returns (uint) {
         return (trees[treeId].level*1)*10**18;
+    }
+
+    function currentPrice() public view returns (uint) {
+        return ((trees.length+1)*1)*10**18;
+    }
+
+    function questStatus(uint treeId) public view returns (uint) {
+        return trees[treeId].onQuestUntil;
+    }
+
+
+    //Payable Functions
+
+    function updateQuestStatus(uint treeId, uint newValue) public payable onlyQuestContract() {
+        trees[treeId].onQuestUntil = newValue;
+    }
+
+    function gainExp(uint treeId, uint amount) public payable onlyQuestContract() {
+        //Cambiar a que solo lo pueda hacer el contrato de quests y no el usuario
+        trees[treeId].exp = trees[treeId].exp + amount;
+        emit GainExp(treeId, amount);
     }
 
     function gainLevel(uint treeId) public payable onlyOwnerOf(treeId) {
@@ -60,10 +90,6 @@ contract Tree is ERC721 {
         trees[treeId].exp = trees[treeId].exp-Exp;
         trees[treeId].level++;
         emit GainLevel(treeId);
-    }
-
-    function currentPrice() public view returns (uint) {
-        return ((trees.length+1)*1)*10**18;
     }
 
     function _generateRandomDNA(uint _treeId) internal returns (uint) {
@@ -77,7 +103,7 @@ contract Tree is ERC721 {
         require(msg.value >= currentPrice());
         uint id = trees.length;
         uint DNA = _generateRandomDNA(id);
-        trees.push(TreeStruct(DNA, 1, 0, false));
+        trees.push(TreeStruct(DNA, 1, 0, 0));
         _mint(msg.sender, id);
         emit NewTree(id);
 
@@ -85,6 +111,10 @@ contract Tree is ERC721 {
 
     function transferOwnership(address newOwner) public payable onlyOwner() {
         ContractOwner = newOwner;
+    }
+
+    function transferQuestContract(address newQuestContract) public payable onlyOwner() {
+        QuestContract = newQuestContract;
     }
 
 }
