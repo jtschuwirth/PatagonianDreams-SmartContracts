@@ -6,6 +6,18 @@ module.exports = function(deployer) {
   deployer.deploy(Ticket);
 };
 
+var Tree = artifacts.require("Tree");
+
+module.exports = function(deployer) {
+  deployer.deploy(Tree);
+};
+
+var Token = artifacts.require("Token");
+
+module.exports = function(deployer) {
+  deployer.deploy(Token);
+};
+
 
 //deploy 2
 var TicketSale = artifacts.require("TicketSale");

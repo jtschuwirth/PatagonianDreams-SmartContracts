@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,25 @@
   },
   "homepage": "https://github.com/jtschuwirth/SmartContracts-NFT-Agus#readme",
   "dependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
     "@harmony-js/core": "^0.1.57",
     "@openzeppelin/contracts": "^4.4.1",
     "@truffle/hdwallet-provider": "^2.0.0",
-    "dotenv": "^10.0.0"
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
+    "dotenv": "^10.0.0",
+    "fs": "0.0.1-security",
+    "gulp": "^4.0.2",
+    "lite-server": "^2.6.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "web3": "^1.6.1"
+  },
+  "devDependencies": {
+    "@openzeppelin/hardhat-upgrades": "^1.12.1",
+    "@openzeppelin/truffle-upgrades": "^1.11.0"
   }
 }
