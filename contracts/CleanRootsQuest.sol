@@ -14,7 +14,7 @@ contract CleanRootsQuest {
     address Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
     
     //Get TreeAddress after TreeContract Deployment
-    address TreeAddress = 0x190460adF29CD8FA28B537a8E403cb36C0fc84cC;
+    address TreeAddress = 0x56Ab64E87641864C0849d4A4Ef4D1Fd7245b2e27;
     
     //Get TokenAddress after TokenContract Deployment
     address Token = 0xCd571eD43B347a4Ab01BAe2d23F9535BBAFe955d;
@@ -35,7 +35,7 @@ contract CleanRootsQuest {
 
     function startQuest(uint treeId) public payable onlyOwnerOf(treeId) {
         require(tree.questStatus(treeId) == 0);
-        uint questDuration = 8*60*60;
+        uint questDuration = 60;
         tree.updateQuestStatus(treeId, block.timestamp+questDuration);
         emit StartQuest(treeId);
     }

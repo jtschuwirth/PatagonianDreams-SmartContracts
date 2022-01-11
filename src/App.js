@@ -68,13 +68,14 @@ function App() {
     }
 
     async function requestCurrentLevelPrice(id) {
-        let currentLevel;
+        let currentPrice;
         try {
-            currentLevel = await TreeContract.methods.neededAmount(id).call()
+            currentPrice = await TreeContract.methods.treeLevel(id).call()
+            currentPrice = currentPrice*10**18
         } catch (error) {
             console.error(error);
         }
-        return currentLevel
+        return currentPrice
     }
 
     async function approveToken() {
@@ -145,9 +146,19 @@ function App() {
     }
 
     async function requestTreeData(id) {
-        let level = 0;
-        let exp = 0;
+        let level;
+        let exp;
         let quest;
+        try {
+            level = await TreeContract.methods.treeLevel(id).call()
+        } catch (error) {
+            console.error(error);
+        }
+        try {
+            exp = await TreeContract.methods.treeExp(id).call()
+        } catch (error) {
+            console.error(error);
+        }
         try {
             quest = await TreeContract.methods.questStatus(id).call()
         } catch (error) {
@@ -157,12 +168,18 @@ function App() {
     }
 
     function renderData(tree, index) {
+        let timer = tree.onQuestUntil-Math.round(Date.now()/1000);
+        if (tree.onQuestUntil == 0) {
+            timer = 0
+        } else if (timer < 0) {
+            timer = "Quest Completed";
+        } 
         return (
             <tr key={index}>
                 <td>{tree.id}</td>
                 <td>{tree.exp}</td>
                 <td>{tree.level}</td>
-                <td>{tree.onQuestUntil}</td>
+                <td>{timer}</td>
                 <td><button onClick={ () => startQuest(tree.id)}>Start Quest</button></td>
                 <td><button onClick={ () => completeQuest(tree.id)}>Complete Quest</button></td>
                 <td><button onClick={ () => cancelQuest(tree.id)}>Cancel Quest</button></td>
@@ -170,16 +187,17 @@ function App() {
             </tr>
         )
     }
-
+    async function setTreeData() {
+        ownedTrees(Address).then((result) => {
+            setAddressData(result);
+        });
+    }
     useEffect(() => {
         isMetaMaskConnected().then((connected) => {
             if (connected) {
                 // metamask is connected
                 connectMetaMask()
-                ownedTrees(Address).then((result) => {
-                    console.log(result)
-                    setAddressData(result);
-                });
+                setTreeData()
             } else {
                 // metamask is not connected
                 setAddress(null)
@@ -203,6 +221,8 @@ function App() {
                     <button onClick={ () => approveTreasury()}>Approve Treasury Spending</button>
                 </div>
             </div>
+            <br></br>
+            <div><button onClick={ () => setTreeData()}>Refresh Data</button></div>
             <Table striped bordered hover size="sm" variant="dark">
                 <thead>
                     <tr>
@@ -213,6 +233,7 @@ function App() {
                         <th>Start Quest</th>
                         <th>Complete Quest</th>
                         <th>Cancel Quest</th>
+                        <th>Gain level</th>
                     </tr>
                 </thead>
                 <tbody>
