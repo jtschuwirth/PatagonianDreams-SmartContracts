@@ -71,15 +71,16 @@ function App() {
         let currentPrice;
         try {
             currentPrice = await TreeContract.methods.treeLevel(id).call()
-            currentPrice = currentPrice*10**18
+            let exp = new BN(10, 10).pow(new BN(18, 10));
+            currentPrice = new BN(currentPrice).mul(exp);
         } catch (error) {
             console.error(error);
         }
         return currentPrice
     }
 
-    async function approveToken() {
-        let valueToken = await requestCurrentLevelPrice(0)
+    async function approveToken(id) {
+        let valueToken = await requestCurrentLevelPrice(id)
         try {
             await TokenContract.methods.approve(TreeAddress, valueToken).send({from: Address})
         } catch (error) {
@@ -184,6 +185,7 @@ function App() {
                 <td><button onClick={ () => completeQuest(tree.id)}>Complete Quest</button></td>
                 <td><button onClick={ () => cancelQuest(tree.id)}>Cancel Quest</button></td>
                 <td><button onClick={ () => gainLevel(tree.id)}>Gain Level</button></td>
+                <td><button onClick={ () => approveToken(tree.id)}>Approve Token for LevelUp</button></td>
             </tr>
         )
     }
@@ -214,7 +216,6 @@ function App() {
                 <div>
                     <button onClick={ () => connectMetaMask()}>Connect Metamask</button>
                     <button onClick={ () => buyNewTree()}>Buy new Tree</button>
-                    <button onClick={ () => approveToken()}>Approve Token use</button>
                 </div>
                 <div>
                 <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
