@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Dropdown } from 'react-bootstrap';
+import Countdown from 'react-countdown';
 const bootstrap = require('bootstrap')
 const Web3 = require('web3');
 const web3 = new Web3(window.ethereum);
@@ -61,7 +62,9 @@ function App() {
 
     async function gainLevel(id) {
         try {
-            await TreeContract.methods.gainLevel(id).send({from: Address})
+            await TreeContract.methods.gainLevel(id).send({from: Address}).then(function(receipt) {
+                setTreeData();
+            })
         } catch (error) {
             console.error(error);
         }
@@ -98,7 +101,9 @@ function App() {
 
     async function startQuest(id) {
         try {
-            await QuestContract.methods.startQuest(id).send({from: Address})
+            await QuestContract.methods.startQuest(id).send({from: Address}).then(function(receipt) {
+                setTreeData();
+            })
         } catch (error) {
             console.error(error);
         }
@@ -106,7 +111,10 @@ function App() {
 
     async function completeQuest(id) {
         try {
-            await QuestContract.methods.completeQuest(id).send({from: Address})
+            await QuestContract.methods.completeQuest(id).send({from: Address}).then(function(receipt) {
+                setTreeData();
+            })
+
         } catch (error) {
             console.error(error);
         }
@@ -114,7 +122,10 @@ function App() {
 
     async function cancelQuest(id) {
         try {
-            await QuestContract.methods.cancelQuest(id).send({from: Address})
+            await QuestContract.methods.cancelQuest(id).send({from: Address}).then(function(receipt) {
+                setTreeData();
+            })
+
         } catch (error) {
             console.error(error);
         }
@@ -168,32 +179,28 @@ function App() {
         return {id: id, level: level, exp: exp, onQuestUntil: quest}
     }
 
-    function renderData(tree, index) {
-        let timer = tree.onQuestUntil-Math.round(Date.now()/1000);
-        if (tree.onQuestUntil == 0) {
-            timer = 0
-        } else if (timer < 0) {
-            timer = "Quest Completed";
-        } 
-        return (
-            <tr key={index}>
-                <td>{tree.id}</td>
-                <td>{tree.exp}</td>
-                <td>{tree.level}</td>
-                <td>{timer}</td>
-                <td><button onClick={ () => startQuest(tree.id)}>Start Quest</button></td>
-                <td><button onClick={ () => completeQuest(tree.id)}>Complete Quest</button></td>
-                <td><button onClick={ () => cancelQuest(tree.id)}>Cancel Quest</button></td>
-                <td><button onClick={ () => gainLevel(tree.id)}>Gain Level</button></td>
-                <td><button onClick={ () => approveToken(tree.id)}>Approve Token for LevelUp</button></td>
-            </tr>
-        )
-    }
     async function setTreeData() {
         ownedTrees(Address).then((result) => {
             setAddressData(result);
         });
     }
+
+    function RenderData(props) {
+        return (
+            <tr key={props.index}>
+                <td>{props.tree.id}</td>
+                <td>{props.tree.exp}</td>
+                <td>{props.tree.level}</td>
+                <td>{<RenderTimer tree={props.tree}/>}</td>
+                <td><button onClick={ () => startQuest(props.tree.id)}>Start Quest</button></td>
+                <td><button onClick={ () => completeQuest(props.tree.id)}>Complete Quest</button></td>
+                <td><button onClick={ () => cancelQuest(props.tree.id)}>Cancel Quest</button></td>
+                <td><button onClick={ () => gainLevel(props.tree.id)}>Gain Level</button></td>
+                <td><button onClick={ () => approveToken(props.tree.id)}>Approve Token for LevelUp</button></td>
+            </tr>
+        )
+    }
+
     useEffect(() => {
         isMetaMaskConnected().then((connected) => {
             if (connected) {
@@ -205,7 +212,6 @@ function App() {
                 setAddress(null)
             }
         });
-
 
     },[Address]);
 
@@ -238,12 +244,26 @@ function App() {
                     </tr>
                 </thead>
                 <tbody>
-                    {AddressData.map((_, index) => renderData(_, index))}
+                    {AddressData.map((_, index) => <RenderData tree={_} index={index}/>)}
                 </tbody>
             </Table>
         </div>
     )
 }
+
+function RenderTimer(props) {
+    let timer = props.tree.onQuestUntil*1000;
+    if (props.tree.onQuestUntil == 0) {
+        timer = Math.round(Date.now())
+    } else if (timer < Date.now()) {
+        return "Quest Completed"
+    } 
+    return (
+    <Countdown date={timer} >
+    </Countdown>
+    )
+}
+
 
 
 export default App;
