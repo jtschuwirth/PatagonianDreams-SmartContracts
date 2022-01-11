@@ -8,9 +8,11 @@ import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 abstract contract Tree is ERC721 {
     //View Functions
 
-    function neededExp(uint treeId) public virtual returns (uint);
+    function treeDNA(uint treeId) public virtual returns (uint);
 
-    function neededAmount(uint treeId) public virtual returns (uint);
+    function treeLevel(uint treeId) public virtual returns (uint);
+
+    function treeExp(uint treeId) public virtual returns (uint);
 
     function currentPrice() public virtual returns (uint);
 

@@ -53,12 +53,16 @@ contract Tree is ERC721 {
 
     //View Functions
 
-    function neededExp(uint treeId) public view returns (uint) {
-        return trees[treeId].level*100;
+    function treeDNA(uint treeId) public view returns (uint) {
+        return trees[treeId].treeDNA;
     }
 
-    function neededAmount(uint treeId) public view returns (uint) {
-        return (trees[treeId].level*1)*10**18;
+    function treeLevel(uint treeId) public view returns (uint) {
+        return trees[treeId].level;
+    }
+
+    function treeExp(uint treeId) public view returns (uint) {
+        return trees[treeId].exp;
     }
 
     function currentPrice() public view returns (uint) {
@@ -83,8 +87,8 @@ contract Tree is ERC721 {
     }
 
     function gainLevel(uint treeId) public payable onlyOwnerOf(treeId) {
-        uint Exp = neededExp(treeId);
-        uint amount = neededAmount(treeId);
+        uint Exp = treeLevel(treeId)*100;
+        uint amount = treeLevel(treeId)*10**18;
         require(trees[treeId].exp >= Exp);
         IERC20(Token).transferFrom(msg.sender, address(this), amount);
         trees[treeId].exp = trees[treeId].exp-Exp;

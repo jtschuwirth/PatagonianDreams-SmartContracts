@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Table, Dropdown } from 'react-bootstrap';
+const bootstrap = require('bootstrap')
 const Web3 = require('web3');
 const web3 = new Web3(window.ethereum);
 var BN = web3.utils.BN;
@@ -20,6 +22,7 @@ var QuestContract = new web3.eth.Contract(QuestABI, QuestAddress);
 
 function App() {
     const [Address, setAddress] = useState(null);
+    const [AddressData, setAddressData] = useState([]);
 
     async function isMetaMaskConnected() {
         const accounts = await web3.eth.getAccounts()
@@ -115,17 +118,76 @@ function App() {
         }
     }
 
+    async function approveTreasury() {
+        let exp = new BN(10, 10).pow(new BN(18, 10));
+        let valueToken = new BN(400000, 10).mul(exp);
+        try {
+            await TokenContract.methods.approve(QuestAddress, valueToken).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function ownedTrees(address) {
+        let trees = [];
+        for (var i=0;i<10;i++) {
+            try {
+              let owner = await TreeContract.methods.ownerOf(i).call();
+              owner = owner.toLowerCase();
+              if (owner == address) {
+                  let data = await requestTreeData(i);
+                  trees.push(data)
+              }
+            } catch(error) {
+            }
+        }
+        return trees
+    }
+
+    async function requestTreeData(id) {
+        let level = 0;
+        let exp = 0;
+        let quest;
+        try {
+            quest = await TreeContract.methods.questStatus(id).call()
+        } catch (error) {
+            console.error(error);
+        }
+        return {id: id, level: level, exp: exp, onQuestUntil: quest}
+    }
+
+    function renderData(tree, index) {
+        return (
+            <tr key={index}>
+                <td>{tree.id}</td>
+                <td>{tree.exp}</td>
+                <td>{tree.level}</td>
+                <td>{tree.onQuestUntil}</td>
+                <td><button onClick={ () => startQuest(tree.id)}>Start Quest</button></td>
+                <td><button onClick={ () => completeQuest(tree.id)}>Complete Quest</button></td>
+                <td><button onClick={ () => cancelQuest(tree.id)}>Cancel Quest</button></td>
+                <td><button onClick={ () => gainLevel(tree.id)}>Gain Level</button></td>
+            </tr>
+        )
+    }
+
     useEffect(() => {
         isMetaMaskConnected().then((connected) => {
             if (connected) {
                 // metamask is connected
                 connectMetaMask()
+                ownedTrees(Address).then((result) => {
+                    console.log(result)
+                    setAddressData(result);
+                });
             } else {
                 // metamask is not connected
                 setAddress(null)
             }
         });
-    },[]);
+
+
+    },[Address]);
 
     return (
         <div>
@@ -134,18 +196,29 @@ function App() {
                 <div>
                     <button onClick={ () => connectMetaMask()}>Connect Metamask</button>
                     <button onClick={ () => buyNewTree()}>Buy new Tree</button>
-                    <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
-                </div>
-                <div>
-                    <button onClick={ () => startQuest(0)}>Start Quest</button>
-                    <button onClick={ () => completeQuest(0)}>Complete Quest</button>
-                    <button onClick={ () => cancelQuest(0)}>Cancel Quest</button>
-                </div>
-                <div>
                     <button onClick={ () => approveToken()}>Approve Token use</button>
-                    <button onClick={ () => gainLevel(0)}>Gain Level</button>
+                </div>
+                <div>
+                <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
+                    <button onClick={ () => approveTreasury()}>Approve Treasury Spending</button>
                 </div>
             </div>
+            <Table striped bordered hover size="sm" variant="dark">
+                <thead>
+                    <tr>
+                        <th>Tree Id</th>
+                        <th>Tree Exp</th>
+                        <th>Tree Level</th>
+                        <th>Quest Timer</th>
+                        <th>Start Quest</th>
+                        <th>Complete Quest</th>
+                        <th>Cancel Quest</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {AddressData.map((_, index) => renderData(_, index))}
+                </tbody>
+            </Table>
         </div>
     )
 }
