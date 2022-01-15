@@ -35,6 +35,7 @@ function App() {
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             const account = accounts[0];
             setAddress(account)
+            setTreeData()
       
           } catch (error) {
             console.error(error);
@@ -54,7 +55,9 @@ function App() {
     async function buyNewTree() {
         let value = await requestCurrentPrice()
         try {
-            await TreeContract.methods.createNewTree().send({from: Address, value: value})
+            await TreeContract.methods.createNewTree().send({from: Address, value: value}).then(function(receipt) {
+                setTreeData();
+            })
         } catch (error) {
             console.error(error);
         }
@@ -206,7 +209,6 @@ function App() {
             if (connected) {
                 // metamask is connected
                 connectMetaMask()
-                setTreeData()
             } else {
                 // metamask is not connected
                 setAddress(null)

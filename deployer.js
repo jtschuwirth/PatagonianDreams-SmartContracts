@@ -16,10 +16,48 @@ var CleanRootsQuest = artifacts.require("CleanRootsQuest");
 module.exports = function(deployer) {
   deployer.deploy(CleanRootsQuest);
 };
+//--------------------------------------------------------
+//Upgradeable Deployer
+
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+
+const Tree = artifacts.require('Tree');
+
+module.exports = async function (deployer) {
+  await deployProxy(Tree, { deployer });
+};
 
 
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+
+const CleanRootsQuest = artifacts.require('CleanRootsQuest');
+
+module.exports = async function (deployer) {
+  await deployProxy(CleanRootsQuest, { deployer });
+};
+
+// Upgrade Contract
+
+const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+
+const Tree = artifacts.require('Tree');
+const TreeV2 = artifacts.require('TreeV2');
+
+module.exports = async function (deployer) {
+  const existing = await Tree.deployed();
+  await upgradeProxy(existing.address, TreeV2, { deployer });
+};
 
 
+const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+
+const CleanRootsQuest = artifacts.require('CleanRootsQuest');
+const CleanRootsQuestV2 = artifacts.require('CleanRootsQuestV2');
+
+module.exports = async function (deployer) {
+  const existing = await CleanRootsQuest.deployed();
+  await upgradeProxy(existing.address, CleanRootsQuestV2, { deployer });
+};
 
 
 
