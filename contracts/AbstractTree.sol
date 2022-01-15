@@ -14,11 +14,19 @@ abstract contract Tree is ERC721 {
 
     function treeExp(uint treeId) public virtual returns (uint);
 
-    function currentPrice() public virtual returns (uint);
+    function treeBarracks(uint treeId) public virtual returns (uint);
+
+    function treeTrainingGrounds(uint treeId) public virtual returns (uint);
 
     function questStatus(uint treeId) public virtual returns (uint);
 
+    function currentPrice() public virtual returns (uint);
+
     //Payable Functions
+
+    function upgradeBarracks(uint treeId) public virtual;
+
+    function upgradeTrainingGrounds(uint treeId) public virtual;
 
     function updateQuestStatus(uint treeId, uint newValue) public virtual;
 
