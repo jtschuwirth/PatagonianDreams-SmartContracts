@@ -14,13 +14,10 @@ contract TreeQuests is Initializable {
 
     address ContractOwner;
     address TreasuryAddress;
-    
-    //Get TreeAddress after TreeContract Deployment
     address TreeAddress;
-    
-    //Get TokenAddress after TokenContract Deployment
     address TokenAddress;
     address GameItemsAddress;
+
     uint totalTreasuryBalance;
 
     AbstractTree tree;
@@ -39,9 +36,7 @@ contract TreeQuests is Initializable {
     function initialize() initializer public {
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
-        TreeAddress = 0x066a907192376088248935AbaD90DaCD06E87F64;
-        TokenAddress = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
-        GameItemsAddress = 0x25ef7FdEA435D7Aaed551E8256792E46d0293d34;
+
         totalTreasuryBalance = 4000000;
         tree = AbstractTree(TreeAddress);
         gameItems = AbstractGameItems(GameItemsAddress);
@@ -156,21 +151,21 @@ contract TreeQuests is Initializable {
         ContractOwner = newOwner;
     }
 
-    function transferTreasury(address newTreasury) public payable onlyOwner() {
+    function transferTreasuryAddress(address newTreasury) public payable onlyOwner() {
         TreasuryAddress = newTreasury;
     }
 
-    function transferTree(address newTree) public payable onlyOwner() {
-        TreeAddress = newTree;
-        tree = AbstractTree(TreeAddress);
-    }
-
-    function transferGameItemsContract(address newGameItems) public payable onlyOwner() {
+    function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
         GameItemsAddress = newGameItems;
         gameItems = AbstractGameItems(GameItemsAddress);
     }
 
-    function transferToken(address newToken) public payable onlyOwner() {
+    function transferTokenAddress(address newToken) public payable onlyOwner() {
         TokenAddress = newToken;
+    }
+
+    function transferTreeAddress(address newTree) public payable onlyOwner() {
+        TreeAddress = newTree;
+        tree = AbstractTree(TreeAddress);
     }
 }

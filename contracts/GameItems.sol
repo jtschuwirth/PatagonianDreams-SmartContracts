@@ -25,7 +25,6 @@ contract GameItems is ERC1155Upgradeable {
 
     function initialize() initializer public {
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
-        QuestContract = address(0);
     }
 
     function mint(address _address, uint itemId, uint amount) public payable onlyQuestContract() {
@@ -37,7 +36,7 @@ contract GameItems is ERC1155Upgradeable {
         ContractOwner = newOwner;
     }
 
-    function transferQuestContract(address newQuestContract) public payable onlyOwner() {
-        QuestContract = newQuestContract;
+    function transferQuestAddress(address newQuest) public payable onlyOwner() {
+        QuestContract = newQuest;
     }
 }

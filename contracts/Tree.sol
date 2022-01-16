@@ -12,17 +12,13 @@ contract Tree is ERC721Upgradeable {
     event GainLevel(uint treeId);
     event BuildingLevelUp (uint treeId, uint buildingId);
 
-    uint Nonce;
     uint Digits;
     uint Modulus;
+
     address ContractOwner;
     address TreasuryAddress;
-    
-    //Get Token Address after TokenContract deployment
     address TokenAddress;
     address GameItemsAddress;
-    
-    //QuestContract is updated after deployment
     address QuestAddress;
 
     struct TreeStruct {
@@ -56,11 +52,10 @@ contract Tree is ERC721Upgradeable {
     function initialize() initializer public {
         Digits = 16;
         Modulus = 10 ** Digits;
+
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
-        TokenAddress = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
-        GameItemsAddress = 0x25ef7FdEA435D7Aaed551E8256792E46d0293d34;
-        QuestAddress= address(0);
+
         __ERC721_init("Patagonic Tree", "PTREE");
     }
 
@@ -181,20 +176,19 @@ contract Tree is ERC721Upgradeable {
         ContractOwner = newOwner;
     }
 
-    function transferQuestContract(address newQuest) public payable onlyOwner() {
-        QuestAddress = newQuest;
-    }
-
-    function transferGameItemsContract(address newGameItems) public payable onlyOwner() {
-        GameItemsAddress = newGameItems;
-    }
-
-    function transferTreasury(address newTreasury) public payable onlyOwner() {
+    function transferTreasuryAddress(address newTreasury) public payable onlyOwner() {
         TreasuryAddress = newTreasury;
     }
 
-    function transferToken(address newToken) public payable onlyOwner() {
+    function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
+        GameItemsAddress = newGameItems;
+    }
+
+    function transferTokenAddress(address newToken) public payable onlyOwner() {
         TokenAddress = newToken;
     }
 
+    function transferQuestAddress(address newQuest) public payable onlyOwner() {
+        QuestAddress = newQuest;
+    }
 }
