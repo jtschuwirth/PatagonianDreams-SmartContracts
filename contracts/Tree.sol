@@ -96,9 +96,10 @@ contract Tree is ERC721Upgradeable {
 
     function upgradeBarracks(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].barracks);
+        require(10 > trees[treeId].barracks);
         uint amount = trees[treeId].barracks*10**18;
         if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
-            
+
         }
         IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
         IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
@@ -108,6 +109,7 @@ contract Tree is ERC721Upgradeable {
 
     function upgradeTrainingGrounds(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].trainingGrounds);
+        require(10 > trees[treeId].trainingGrounds);
         uint amount = trees[treeId].trainingGrounds*10**18;
         if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
 

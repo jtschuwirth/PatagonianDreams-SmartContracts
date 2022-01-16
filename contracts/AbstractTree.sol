@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-abstract contract Tree is ERC721 {
+abstract contract AbstractTree is ERC721 {
     //View Functions
 
     function treeDNA(uint treeId) public virtual returns (uint);
