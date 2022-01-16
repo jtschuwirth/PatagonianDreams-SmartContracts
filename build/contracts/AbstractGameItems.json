@@ -377,39 +377,39 @@
     "absolutePath": "project:/contracts/AbstractGameItems.sol",
     "exportedSymbols": {
       "AbstractGameItems": [
-        45
+        24
       ],
       "Address": [
-        7967
+        7852
       ],
       "Context": [
-        7989
+        7874
       ],
       "ERC1155": [
-        5851
+        5736
       ],
       "ERC165": [
-        8216
+        8101
       ],
       "IERC1155": [
-        5973
+        5858
       ],
       "IERC1155MetadataURI": [
-        6029
+        5914
       ],
       "IERC1155Receiver": [
-        6014
+        5899
       ],
       "IERC165": [
-        8228
+        8113
       ]
     },
-    "id": 46,
+    "id": 25,
     "license": "UNLICENSED",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 22,
+        "id": 1,
         "literals": [
           "solidity",
           "^",
@@ -417,17 +417,17 @@
           ".3"
         ],
         "nodeType": "PragmaDirective",
-        "src": "42:23:1"
+        "src": "42:23:0"
       },
       {
         "absolutePath": "project:/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         "file": "../node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-        "id": 23,
+        "id": 2,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 46,
-        "sourceUnit": 5852,
-        "src": "69:75:1",
+        "scope": 25,
+        "sourceUnit": 5737,
+        "src": "69:75:0",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -436,57 +436,57 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 24,
+              "id": 3,
               "name": "ERC1155",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 5851,
-              "src": "187:7:1"
+              "referencedDeclaration": 5736,
+              "src": "187:7:0"
             },
-            "id": 25,
+            "id": 4,
             "nodeType": "InheritanceSpecifier",
-            "src": "187:7:1"
+            "src": "187:7:0"
           }
         ],
         "canonicalName": "AbstractGameItems",
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": false,
-        "id": 45,
+        "id": 24,
         "linearizedBaseContracts": [
-          45,
-          5851,
-          6029,
-          5973,
-          8216,
-          8228,
-          7989
+          24,
+          5736,
+          5914,
+          5858,
+          8101,
+          8113,
+          7874
         ],
         "name": "AbstractGameItems",
-        "nameLocation": "166:17:1",
+        "nameLocation": "166:17:0",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "156e29f6",
-            "id": 34,
+            "id": 13,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "mint",
-            "nameLocation": "213:4:1",
+            "nameLocation": "213:4:0",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 32,
+              "id": 11,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27,
+                  "id": 6,
                   "mutability": "mutable",
                   "name": "_address",
-                  "nameLocation": "226:8:1",
+                  "nameLocation": "226:8:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34,
-                  "src": "218:16:1",
+                  "scope": 13,
+                  "src": "218:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -494,10 +494,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 26,
+                    "id": 5,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "218:7:1",
+                    "src": "218:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -508,13 +508,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 29,
+                  "id": 8,
                   "mutability": "mutable",
                   "name": "itemId",
-                  "nameLocation": "241:6:1",
+                  "nameLocation": "241:6:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34,
-                  "src": "236:11:1",
+                  "scope": 13,
+                  "src": "236:11:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -522,10 +522,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28,
+                    "id": 7,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "236:4:1",
+                    "src": "236:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -535,13 +535,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31,
+                  "id": 10,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "254:6:1",
+                  "nameLocation": "254:6:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34,
-                  "src": "249:11:1",
+                  "scope": 13,
+                  "src": "249:11:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -549,10 +549,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 30,
+                    "id": 9,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "249:4:1",
+                    "src": "249:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -561,42 +561,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "217:44:1"
+              "src": "217:44:0"
             },
             "returnParameters": {
-              "id": 33,
+              "id": 12,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "276:0:1"
+              "src": "276:0:0"
             },
-            "scope": 45,
-            "src": "204:73:1",
+            "scope": 24,
+            "src": "204:73:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
             "functionSelector": "f2fde38b",
-            "id": 39,
+            "id": 18,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferOwnership",
-            "nameLocation": "294:17:1",
+            "nameLocation": "294:17:0",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 37,
+              "id": 16,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 36,
+                  "id": 15,
                   "mutability": "mutable",
                   "name": "newOwner",
-                  "nameLocation": "320:8:1",
+                  "nameLocation": "320:8:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39,
-                  "src": "312:16:1",
+                  "scope": 18,
+                  "src": "312:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -604,10 +604,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 35,
+                    "id": 14,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "312:7:1",
+                    "src": "312:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -617,42 +617,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "311:18:1"
+              "src": "311:18:0"
             },
             "returnParameters": {
-              "id": 38,
+              "id": 17,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "344:0:1"
+              "src": "344:0:0"
             },
-            "scope": 45,
-            "src": "285:60:1",
+            "scope": 24,
+            "src": "285:60:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
             "functionSelector": "104e21b2",
-            "id": 44,
+            "id": 23,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferQuestContract",
-            "nameLocation": "362:21:1",
+            "nameLocation": "362:21:0",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 42,
+              "id": 21,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 41,
+                  "id": 20,
                   "mutability": "mutable",
                   "name": "newQuestContract",
-                  "nameLocation": "392:16:1",
+                  "nameLocation": "392:16:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44,
-                  "src": "384:24:1",
+                  "scope": 23,
+                  "src": "384:24:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -660,10 +660,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 40,
+                    "id": 19,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "384:7:1",
+                    "src": "384:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -673,65 +673,65 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "383:26:1"
+              "src": "383:26:0"
             },
             "returnParameters": {
-              "id": 43,
+              "id": 22,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "424:0:1"
+              "src": "424:0:0"
             },
-            "scope": 45,
-            "src": "353:72:1",
+            "scope": 24,
+            "src": "353:72:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 46,
-        "src": "148:280:1",
+        "scope": 25,
+        "src": "148:280:0",
         "usedErrors": []
       }
     ],
-    "src": "42:386:1"
+    "src": "42:386:0"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/AbstractGameItems.sol",
     "exportedSymbols": {
       "AbstractGameItems": [
-        45
+        24
       ],
       "Address": [
-        7967
+        7852
       ],
       "Context": [
-        7989
+        7874
       ],
       "ERC1155": [
-        5851
+        5736
       ],
       "ERC165": [
-        8216
+        8101
       ],
       "IERC1155": [
-        5973
+        5858
       ],
       "IERC1155MetadataURI": [
-        6029
+        5914
       ],
       "IERC1155Receiver": [
-        6014
+        5899
       ],
       "IERC165": [
-        8228
+        8113
       ]
     },
-    "id": 46,
+    "id": 25,
     "license": "UNLICENSED",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 22,
+        "id": 1,
         "literals": [
           "solidity",
           "^",
@@ -739,17 +739,17 @@
           ".3"
         ],
         "nodeType": "PragmaDirective",
-        "src": "42:23:1"
+        "src": "42:23:0"
       },
       {
         "absolutePath": "project:/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         "file": "../node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-        "id": 23,
+        "id": 2,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 46,
-        "sourceUnit": 5852,
-        "src": "69:75:1",
+        "scope": 25,
+        "sourceUnit": 5737,
+        "src": "69:75:0",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -758,57 +758,57 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 24,
+              "id": 3,
               "name": "ERC1155",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 5851,
-              "src": "187:7:1"
+              "referencedDeclaration": 5736,
+              "src": "187:7:0"
             },
-            "id": 25,
+            "id": 4,
             "nodeType": "InheritanceSpecifier",
-            "src": "187:7:1"
+            "src": "187:7:0"
           }
         ],
         "canonicalName": "AbstractGameItems",
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": false,
-        "id": 45,
+        "id": 24,
         "linearizedBaseContracts": [
-          45,
-          5851,
-          6029,
-          5973,
-          8216,
-          8228,
-          7989
+          24,
+          5736,
+          5914,
+          5858,
+          8101,
+          8113,
+          7874
         ],
         "name": "AbstractGameItems",
-        "nameLocation": "166:17:1",
+        "nameLocation": "166:17:0",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "156e29f6",
-            "id": 34,
+            "id": 13,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "mint",
-            "nameLocation": "213:4:1",
+            "nameLocation": "213:4:0",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 32,
+              "id": 11,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27,
+                  "id": 6,
                   "mutability": "mutable",
                   "name": "_address",
-                  "nameLocation": "226:8:1",
+                  "nameLocation": "226:8:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34,
-                  "src": "218:16:1",
+                  "scope": 13,
+                  "src": "218:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -816,10 +816,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 26,
+                    "id": 5,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "218:7:1",
+                    "src": "218:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -830,13 +830,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 29,
+                  "id": 8,
                   "mutability": "mutable",
                   "name": "itemId",
-                  "nameLocation": "241:6:1",
+                  "nameLocation": "241:6:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34,
-                  "src": "236:11:1",
+                  "scope": 13,
+                  "src": "236:11:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -844,10 +844,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28,
+                    "id": 7,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "236:4:1",
+                    "src": "236:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -857,13 +857,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31,
+                  "id": 10,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "254:6:1",
+                  "nameLocation": "254:6:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34,
-                  "src": "249:11:1",
+                  "scope": 13,
+                  "src": "249:11:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -871,10 +871,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 30,
+                    "id": 9,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "249:4:1",
+                    "src": "249:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -883,42 +883,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "217:44:1"
+              "src": "217:44:0"
             },
             "returnParameters": {
-              "id": 33,
+              "id": 12,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "276:0:1"
+              "src": "276:0:0"
             },
-            "scope": 45,
-            "src": "204:73:1",
+            "scope": 24,
+            "src": "204:73:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
             "functionSelector": "f2fde38b",
-            "id": 39,
+            "id": 18,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferOwnership",
-            "nameLocation": "294:17:1",
+            "nameLocation": "294:17:0",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 37,
+              "id": 16,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 36,
+                  "id": 15,
                   "mutability": "mutable",
                   "name": "newOwner",
-                  "nameLocation": "320:8:1",
+                  "nameLocation": "320:8:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39,
-                  "src": "312:16:1",
+                  "scope": 18,
+                  "src": "312:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -926,10 +926,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 35,
+                    "id": 14,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "312:7:1",
+                    "src": "312:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -939,42 +939,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "311:18:1"
+              "src": "311:18:0"
             },
             "returnParameters": {
-              "id": 38,
+              "id": 17,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "344:0:1"
+              "src": "344:0:0"
             },
-            "scope": 45,
-            "src": "285:60:1",
+            "scope": 24,
+            "src": "285:60:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
             "functionSelector": "104e21b2",
-            "id": 44,
+            "id": 23,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferQuestContract",
-            "nameLocation": "362:21:1",
+            "nameLocation": "362:21:0",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 42,
+              "id": 21,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 41,
+                  "id": 20,
                   "mutability": "mutable",
                   "name": "newQuestContract",
-                  "nameLocation": "392:16:1",
+                  "nameLocation": "392:16:0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44,
-                  "src": "384:24:1",
+                  "scope": 23,
+                  "src": "384:24:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -982,10 +982,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 40,
+                    "id": 19,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "384:7:1",
+                    "src": "384:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -995,27 +995,27 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "383:26:1"
+              "src": "383:26:0"
             },
             "returnParameters": {
-              "id": 43,
+              "id": 22,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "424:0:1"
+              "src": "424:0:0"
             },
-            "scope": 45,
-            "src": "353:72:1",
+            "scope": 24,
+            "src": "353:72:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 46,
-        "src": "148:280:1",
+        "scope": 25,
+        "src": "148:280:0",
         "usedErrors": []
       }
     ],
-    "src": "42:386:1"
+    "src": "42:386:0"
   },
   "compiler": {
     "name": "solc",
@@ -1023,7 +1023,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-16T15:31:28.071Z",
+  "updatedAt": "2022-01-16T16:02:17.403Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

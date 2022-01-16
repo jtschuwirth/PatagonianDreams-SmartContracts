@@ -21,6 +21,11 @@ var QuestABI = QuestJson["abi"];
 var QuestAddress = QuestJson["networks"]["2"]["address"];
 var QuestContract = new web3.eth.Contract(QuestABI, QuestAddress);
 
+var GameItemsJson = require("../build/contracts/GameItems.json");
+var GameItemsABI = GameItemsJson["abi"];
+var GameItemsAddress = GameItemsJson["networks"]["2"]["address"];
+var GameItemsContract = new web3.eth.Contract(GameItemsABI, GameItemsAddress);
+
 function App() {
     const [Address, setAddress] = useState(null);
     const [AddressData, setAddressData] = useState([]);
@@ -96,7 +101,31 @@ function App() {
 
     async function changeQuestAddress() {
         try {
-            await TreeContract.methods.transferQuestContract(QuestAddress).send({from: Address})
+            await TreeContract.methods.transferQuestAddress(QuestAddress).send({from: Address})
+            await GameItemsContract.methods.transferQuestAddress(QuestAddress).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    async function changeTreeAddress() {
+        try {
+            await QuestContract.methods.transferTreeAddress(TreeAddress).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    async function changeTokenAddress() {
+        try {
+            await TreeContract.methods.transferTokenAddress(TokenAddress).send({from: Address})
+            await QuestContract.methods.transferTokenAddress(TokenAddress).send({from: Address})
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    async function changeGameItemsAddress() {
+        try {
+            await TreeContract.methods.transferGameItemsAddress(GameItemsAddress).send({from: Address})
+            await QuestContract.methods.transferGameItemsAddress(GameItemsAddress).send({from: Address})
         } catch (error) {
             console.error(error);
         }
@@ -226,9 +255,12 @@ function App() {
                     <button onClick={ () => buyNewTree()}>Buy new Tree</button>
                 </div>
                 <div>
-                <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
-                    <button onClick={ () => approveTreasury()}>Approve Treasury Spending</button>
+                    <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
+                    <button onClick={ () => changeTreeAddress()}>Change Tree Address</button>
+                    <button onClick={ () => changeTokenAddress()}>Change Token Address</button>
+                    <button onClick={ () => changeGameItemsAddress()}>Change GameItems Address</button>
                 </div>
+                <button onClick={ () => approveTreasury()}>Approve Treasury Spending</button>
             </div>
             <br></br>
             <div><button onClick={ () => setTreeData()}>Refresh Data</button></div>

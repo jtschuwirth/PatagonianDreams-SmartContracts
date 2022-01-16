@@ -180,12 +180,12 @@ contract Tree is ERC721Upgradeable {
         TreasuryAddress = newTreasury;
     }
 
-    function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
-        GameItemsAddress = newGameItems;
-    }
-
     function transferTokenAddress(address newToken) public payable onlyOwner() {
         TokenAddress = newToken;
+    }
+
+    function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
+        GameItemsAddress = newGameItems;
     }
 
     function transferQuestAddress(address newQuest) public payable onlyOwner() {

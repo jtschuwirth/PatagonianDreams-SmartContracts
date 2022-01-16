@@ -38,8 +38,6 @@ contract TreeQuests is Initializable {
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
 
         totalTreasuryBalance = 4000000;
-        tree = AbstractTree(TreeAddress);
-        gameItems = AbstractGameItems(GameItemsAddress);
     }
     
     // Util functions
@@ -155,13 +153,13 @@ contract TreeQuests is Initializable {
         TreasuryAddress = newTreasury;
     }
 
+    function transferTokenAddress(address newToken) public payable onlyOwner() {
+        TokenAddress = newToken;
+    }
+
     function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
         GameItemsAddress = newGameItems;
         gameItems = AbstractGameItems(GameItemsAddress);
-    }
-
-    function transferTokenAddress(address newToken) public payable onlyOwner() {
-        TokenAddress = newToken;
     }
 
     function transferTreeAddress(address newTree) public payable onlyOwner() {
