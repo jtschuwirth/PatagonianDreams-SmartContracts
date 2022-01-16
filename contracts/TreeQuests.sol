@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.3;
 import "./AbstractTree.sol";
+import "./AbstractBasicRune.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../node_modules/@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 contract TreeQuests is Initializable {
 
@@ -12,16 +13,18 @@ contract TreeQuests is Initializable {
     event CancelQuest(uint treeId, uint questId);
 
     address ContractOwner;
-    address Treasury;
+    address TreasuryAddress;
     
     //Get TreeAddress after TreeContract Deployment
     address TreeAddress;
     
     //Get TokenAddress after TokenContract Deployment
-    address Token;
+    address TokenAddress;
+    address BasicRuneAddress;
     uint totalTreasuryBalance;
 
-    Tree tree;
+    AbstractTree tree;
+    AbstractBasicRune basicRune;
 
     modifier onlyOwnerOf(uint _treeId) {
         require(tree.ownerOf(_treeId) == msg.sender);
@@ -35,11 +38,13 @@ contract TreeQuests is Initializable {
 
     function initialize() initializer public {
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
-        Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
-        TreeAddress = 0x56Ab64E87641864C0849d4A4Ef4D1Fd7245b2e27;
-        Token = 0xCd571eD43B347a4Ab01BAe2d23F9535BBAFe955d;
+        TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
+        TreeAddress = 0x066a907192376088248935AbaD90DaCD06E87F64;
+        TokenAddress = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
+        BasicRuneAddress = 0x6Ba1097C0aA545755383600292eacCC095dF6610;
         totalTreasuryBalance = 4000000;
-        tree = Tree(TreeAddress);
+        tree = AbstractTree(TreeAddress);
+        basicRune = AbstractBasicRune(BasicRuneAddress);
     }
     
     // Util functions
@@ -47,8 +52,9 @@ contract TreeQuests is Initializable {
     function ceil(uint _a, uint _m) internal pure returns (uint ) {
         return ((_a + _m - 1) / _m) * _m;
     }
+
     function treasuryMultiplicator() public view returns (uint) {
-        uint currentTreasuryBalance = IERC20(Token).balanceOf(Treasury);
+        uint currentTreasuryBalance = IERC20(TokenAddress).balanceOf(TreasuryAddress);
         if (currentTreasuryBalance >= totalTreasuryBalance*5/100) {
             return 100;
         } else if (currentTreasuryBalance >= totalTreasuryBalance*4/100) {
@@ -63,6 +69,18 @@ contract TreeQuests is Initializable {
             return 5;
         } else {
             return 0;
+        }
+    }
+
+    function vrf() public view returns (bytes32 result) {
+        uint[1] memory bn;
+        bn[0] = block.number;
+        assembly {
+            let memPtr := mload(0x40)
+            if iszero(staticcall(not(0), 0xff, bn, 0x20, memPtr, 0x20)) {
+                invalid()
+            }
+            result := mload(memPtr)
         }
     }
 
@@ -82,13 +100,13 @@ contract TreeQuests is Initializable {
         require(block.timestamp >= tree.questStatus(treeId));
 
         uint expReward = 10;
-        tree.gainExp(treeId, expReward);
-
         uint treeMult = ceil(tree.treeBarracks(treeId),5)/5;
         uint treasuryMult = treasuryMultiplicator();
         uint tokenReward = (1*10**18)*treasuryMult*treeMult/100;
+        
         tree.updateQuestStatus(treeId, 0);
-        IERC20(Token).transferFrom(Treasury, msg.sender, tokenReward);
+        tree.gainExp(treeId, expReward);
+        IERC20(TokenAddress).transferFrom(TreasuryAddress, msg.sender, tokenReward);
         emit CompleteQuest(treeId, 0);
 
     }
@@ -114,6 +132,7 @@ contract TreeQuests is Initializable {
         require(block.timestamp >= tree.questStatus(treeId));
 
         uint expReward = 100;
+        tree.updateQuestStatus(treeId, 0);
         tree.gainExp(treeId, expReward);
         emit CompleteQuest(treeId, 1);
 
@@ -133,6 +152,6 @@ contract TreeQuests is Initializable {
     }
 
     function transferTreasury(address newTreasury) public payable onlyOwner() {
-        Treasury = newTreasury;
+        TreasuryAddress = newTreasury;
     }
 }

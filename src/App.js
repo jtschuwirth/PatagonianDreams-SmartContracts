@@ -16,7 +16,7 @@ var TokenABI = TokenJson["abi"];
 var TokenAddress = TokenJson["networks"]["2"]["address"];
 var TokenContract = new web3.eth.Contract(TokenABI, TokenAddress);
 
-var QuestJson = require("../build/contracts/CleanRootsQuest.json");
+var QuestJson = require("../build/contracts/TreeQuests.json");
 var QuestABI = QuestJson["abi"];
 var QuestAddress = QuestJson["networks"]["2"]["address"];
 var QuestContract = new web3.eth.Contract(QuestABI, QuestAddress);
@@ -104,7 +104,7 @@ function App() {
 
     async function startQuest(id) {
         try {
-            await QuestContract.methods.startQuest(id).send({from: Address}).then(function(receipt) {
+            await QuestContract.methods.startQuest1(id).send({from: Address}).then(function(receipt) {
                 setTreeData();
             })
         } catch (error) {
@@ -114,7 +114,7 @@ function App() {
 
     async function completeQuest(id) {
         try {
-            await QuestContract.methods.completeQuest(id).send({from: Address}).then(function(receipt) {
+            await QuestContract.methods.completeQuest1(id).send({from: Address}).then(function(receipt) {
                 setTreeData();
             })
 
@@ -125,7 +125,7 @@ function App() {
 
     async function cancelQuest(id) {
         try {
-            await QuestContract.methods.cancelQuest(id).send({from: Address}).then(function(receipt) {
+            await QuestContract.methods.cancelQuest1(id).send({from: Address}).then(function(receipt) {
                 setTreeData();
             })
 

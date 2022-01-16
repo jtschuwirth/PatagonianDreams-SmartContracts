@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.3;
 
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract Tree is ERC721Upgradeable {
     event NewTree(uint treeId);
@@ -19,6 +20,7 @@ contract Tree is ERC721Upgradeable {
     
     //Get Token Address after TokenContract deployment
     address Token;
+    address BasicRune;
     
     //QuestContract is updated after deployment
     address QuestContract;
@@ -52,14 +54,28 @@ contract Tree is ERC721Upgradeable {
     }
 
     function initialize() initializer public {
-        Nonce = 1;
         Digits = 16;
         Modulus = 10 ** Digits;
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
-        Token = 0xCd571eD43B347a4Ab01BAe2d23F9535BBAFe955d;
+        Token = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
+        BasicRune = 0x6Ba1097C0aA545755383600292eacCC095dF6610;
         QuestContract = address(0);
         __ERC721_init("Patagonic Tree", "PTREE");
+    }
+
+    //Util Functions
+
+    function vrf() public view returns (bytes32 result) {
+        uint[1] memory bn;
+        bn[0] = block.number;
+        assembly {
+            let memPtr := mload(0x40)
+            if iszero(staticcall(not(0), 0xff, bn, 0x20, memPtr, 0x20)) {
+                invalid()
+            }
+            result := mload(memPtr)
+        }
     }
 
     //View Functions
@@ -92,31 +108,38 @@ contract Tree is ERC721Upgradeable {
         return ((trees.length+1)*1)*10**18;
     }
 
+    function _generateRandomDNA() internal view returns (uint) {
+        uint rand = uint(keccak256(abi.encodePacked(vrf())));
+        return rand % Modulus;
+    }
+
     //Payable Functions
 
     function upgradeBarracks(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].barracks);
-        require(10 > trees[treeId].barracks);
+        require(21 > trees[treeId].barracks);
         uint amount = trees[treeId].barracks*10**18;
         if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
-
+            uint BasicRuneAmount = (trees[treeId].barracks-10);
+            IERC721(BasicRune).safeTransferFrom(msg.sender, address(0), BasicRuneAmount);
         }
+        trees[treeId].barracks++;
         IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
         IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
-        trees[treeId].barracks++;
         emit BuildingLevelUp (treeId, 0);
     }
 
     function upgradeTrainingGrounds(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].trainingGrounds);
-        require(10 > trees[treeId].trainingGrounds);
+        require(21 > trees[treeId].trainingGrounds);
         uint amount = trees[treeId].trainingGrounds*10**18;
         if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
-
+            uint BasicRuneAmount = (trees[treeId].trainingGrounds-10);
+            IERC721(BasicRune).safeTransferFrom(msg.sender, address(0), BasicRuneAmount);
         }
+        trees[treeId].trainingGrounds++;
         IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
         IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
-        trees[treeId].trainingGrounds++;
         emit BuildingLevelUp (treeId, 1);
     }
 
@@ -134,24 +157,18 @@ contract Tree is ERC721Upgradeable {
         require(trees[treeId].level < 100 );
         require(trees[treeId].exp >= trees[treeId].level*100);
         uint amount = trees[treeId].level*10**18;
-        IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
-        IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;
+        IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
+        IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
         emit GainLevel(treeId);
-    }
-
-    function _generateRandomDNA(uint _treeId) internal returns (uint) {
-        uint rand = uint(keccak256(abi.encodePacked(_treeId + Nonce)));
-        Nonce++;
-        return rand % Modulus;
     }
 
     function createNewTree() public payable {
         require(msg.sender != address(0) && msg.sender != address(this));
         require(msg.value >= currentPrice());
         uint id = trees.length;
-        uint DNA = _generateRandomDNA(id);
+        uint DNA = _generateRandomDNA();
         trees.push(TreeStruct(DNA, 1, 0, 0, 0, 0));
         _mint(msg.sender, id);
         emit NewTree(id);
