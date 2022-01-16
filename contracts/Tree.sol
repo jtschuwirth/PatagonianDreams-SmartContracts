@@ -4,7 +4,7 @@ pragma solidity ^0.8.3;
 
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 contract Tree is ERC721Upgradeable {
     event NewTree(uint treeId);
@@ -20,7 +20,7 @@ contract Tree is ERC721Upgradeable {
     
     //Get Token Address after TokenContract deployment
     address Token;
-    address BasicRune;
+    address GameItemsAddress;
     
     //QuestContract is updated after deployment
     address QuestContract;
@@ -59,7 +59,7 @@ contract Tree is ERC721Upgradeable {
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
         Token = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
-        BasicRune = 0x6Ba1097C0aA545755383600292eacCC095dF6610;
+        GameItemsAddress = address(0);
         QuestContract = address(0);
         __ERC721_init("Patagonic Tree", "PTREE");
     }
@@ -121,7 +121,7 @@ contract Tree is ERC721Upgradeable {
         uint amount = trees[treeId].barracks*10**18;
         if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
             uint BasicRuneAmount = (trees[treeId].barracks-10);
-            IERC721(BasicRune).safeTransferFrom(msg.sender, address(0), BasicRuneAmount);
+            IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].barracks++;
         IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
@@ -135,7 +135,7 @@ contract Tree is ERC721Upgradeable {
         uint amount = trees[treeId].trainingGrounds*10**18;
         if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
             uint BasicRuneAmount = (trees[treeId].trainingGrounds-10);
-            IERC721(BasicRune).safeTransferFrom(msg.sender, address(0), BasicRuneAmount);
+            IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].trainingGrounds++;
         IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
