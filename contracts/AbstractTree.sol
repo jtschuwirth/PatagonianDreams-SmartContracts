@@ -34,8 +34,4 @@ abstract contract AbstractTree is ERC721 {
     function gainLevel(uint treeId) public virtual;
 
     function createNewTree() public virtual;
-
-    function transferOwnership(address newOwner) public virtual;
-
-    function transferQuestContract(address newQuestContract) public virtual;
 }

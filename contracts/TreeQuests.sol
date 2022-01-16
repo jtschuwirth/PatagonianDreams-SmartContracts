@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.3;
 import "./AbstractTree.sol";
-import "./AbstractBasicRune.sol";
+import "./AbstractGameItems.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -20,11 +20,11 @@ contract TreeQuests is Initializable {
     
     //Get TokenAddress after TokenContract Deployment
     address TokenAddress;
-    address BasicRuneAddress;
+    address GameItemsAddress;
     uint totalTreasuryBalance;
 
     AbstractTree tree;
-    AbstractBasicRune basicRune;
+    AbstractGameItems gameItems;
 
     modifier onlyOwnerOf(uint _treeId) {
         require(tree.ownerOf(_treeId) == msg.sender);
@@ -41,10 +41,10 @@ contract TreeQuests is Initializable {
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
         TreeAddress = 0x066a907192376088248935AbaD90DaCD06E87F64;
         TokenAddress = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
-        BasicRuneAddress = 0x6Ba1097C0aA545755383600292eacCC095dF6610;
+        GameItemsAddress = 0x25ef7FdEA435D7Aaed551E8256792E46d0293d34;
         totalTreasuryBalance = 4000000;
         tree = AbstractTree(TreeAddress);
-        basicRune = AbstractBasicRune(BasicRuneAddress);
+        gameItems = AbstractGameItems(GameItemsAddress);
     }
     
     // Util functions
@@ -132,8 +132,13 @@ contract TreeQuests is Initializable {
         require(block.timestamp >= tree.questStatus(treeId));
 
         uint expReward = 100;
+        uint rand = uint(keccak256(abi.encodePacked(vrf())));
+        uint chance = rand%10;
         tree.updateQuestStatus(treeId, 0);
         tree.gainExp(treeId, expReward);
+        if (chance == 0) {
+            gameItems.mint(msg.sender, 0, 1);
+        }
         emit CompleteQuest(treeId, 1);
 
     }
@@ -153,5 +158,19 @@ contract TreeQuests is Initializable {
 
     function transferTreasury(address newTreasury) public payable onlyOwner() {
         TreasuryAddress = newTreasury;
+    }
+
+    function transferTree(address newTree) public payable onlyOwner() {
+        TreeAddress = newTree;
+        tree = AbstractTree(TreeAddress);
+    }
+
+    function transferGameItemsContract(address newGameItems) public payable onlyOwner() {
+        GameItemsAddress = newGameItems;
+        gameItems = AbstractGameItems(GameItemsAddress);
+    }
+
+    function transferToken(address newToken) public payable onlyOwner() {
+        TokenAddress = newToken;
     }
 }

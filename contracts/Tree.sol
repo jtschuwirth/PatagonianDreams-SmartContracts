@@ -16,14 +16,14 @@ contract Tree is ERC721Upgradeable {
     uint Digits;
     uint Modulus;
     address ContractOwner;
-    address Treasury;
+    address TreasuryAddress;
     
     //Get Token Address after TokenContract deployment
-    address Token;
+    address TokenAddress;
     address GameItemsAddress;
     
     //QuestContract is updated after deployment
-    address QuestContract;
+    address QuestAddress;
 
     struct TreeStruct {
         uint treeDNA;
@@ -49,7 +49,7 @@ contract Tree is ERC721Upgradeable {
     }
 
     modifier onlyQuestContract() {
-        require(QuestContract == msg.sender);
+        require(QuestAddress == msg.sender);
         _;
     }
 
@@ -57,10 +57,10 @@ contract Tree is ERC721Upgradeable {
         Digits = 16;
         Modulus = 10 ** Digits;
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
-        Treasury = 0xfd768E668A158C173e9549d1632902C2A4363178;
-        Token = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
-        GameItemsAddress = address(0);
-        QuestContract = address(0);
+        TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
+        TokenAddress = 0x54301761569145d50da03d8CfdfA19913f20Ed9b;
+        GameItemsAddress = 0x25ef7FdEA435D7Aaed551E8256792E46d0293d34;
+        QuestAddress= address(0);
         __ERC721_init("Patagonic Tree", "PTREE");
     }
 
@@ -124,8 +124,8 @@ contract Tree is ERC721Upgradeable {
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].barracks++;
-        IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
-        IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*70/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*30/100);
         emit BuildingLevelUp (treeId, 0);
     }
 
@@ -138,8 +138,8 @@ contract Tree is ERC721Upgradeable {
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].trainingGrounds++;
-        IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
-        IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*70/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*30/100);
         emit BuildingLevelUp (treeId, 1);
     }
 
@@ -159,8 +159,8 @@ contract Tree is ERC721Upgradeable {
         uint amount = trees[treeId].level*10**18;
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;
-        IERC20(Token).transferFrom(msg.sender, Treasury, amount*70/100);
-        IERC20(Token).transferFrom(msg.sender, ContractOwner, amount*30/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*70/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*30/100);
         emit GainLevel(treeId);
     }
 
@@ -175,12 +175,26 @@ contract Tree is ERC721Upgradeable {
 
     }
 
+    //Transfer Functions
+
     function transferOwnership(address newOwner) public payable onlyOwner() {
         ContractOwner = newOwner;
     }
 
-    function transferQuestContract(address newQuestContract) public payable onlyOwner() {
-        QuestContract = newQuestContract;
+    function transferQuestContract(address newQuest) public payable onlyOwner() {
+        QuestAddress = newQuest;
+    }
+
+    function transferGameItemsContract(address newGameItems) public payable onlyOwner() {
+        GameItemsAddress = newGameItems;
+    }
+
+    function transferTreasury(address newTreasury) public payable onlyOwner() {
+        TreasuryAddress = newTreasury;
+    }
+
+    function transferToken(address newToken) public payable onlyOwner() {
+        TokenAddress = newToken;
     }
 
 }
