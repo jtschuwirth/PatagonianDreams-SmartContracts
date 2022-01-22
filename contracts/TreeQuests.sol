@@ -3,6 +3,7 @@
 pragma solidity ^0.8.3;
 import "./AbstractTree.sol";
 import "./AbstractGameItems.sol";
+import "./AbstractPudu.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -22,6 +23,7 @@ contract TreeQuests is Initializable {
 
     AbstractTree tree;
     AbstractGameItems gameItems;
+    AbstractPudu pudu;
 
     modifier onlyOwnerOf(uint _treeId) {
         require(tree.ownerOf(_treeId) == msg.sender);
@@ -37,7 +39,7 @@ contract TreeQuests is Initializable {
         ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
 
-        totalTreasuryBalance = 4000000;
+        totalTreasuryBalance = 1000000000*30/100;
     }
     
     // Util functions
@@ -94,12 +96,17 @@ contract TreeQuests is Initializable {
 
         uint expReward = 10;
         uint treeMult = ceil(tree.treeBarracks(treeId),5)/5;
-        uint treasuryMult = treasuryMultiplicator();
-        uint tokenReward = (1*10**18)*treasuryMult*treeMult/100;
+        uint tokenReward = (1*10**18)*treeMult/100;
         
         tree.updateQuestStatus(treeId, 0);
         tree.gainExp(treeId, expReward);
-        IERC20(TokenAddress).transferFrom(TreasuryAddress, msg.sender, tokenReward);
+        if (1000000000 >= IERC20(TokenAddress).totalSupply()+tokenReward ) {
+            pudu.mint(msg.sender, tokenReward);
+        } else {
+            uint treasuryMult = treasuryMultiplicator();
+            tokenReward = tokenReward*treasuryMult/100;
+            IERC20(TokenAddress).transferFrom(TreasuryAddress, msg.sender, tokenReward);
+        }
         emit CompleteQuest(treeId, 0);
 
     }
@@ -155,6 +162,7 @@ contract TreeQuests is Initializable {
 
     function transferTokenAddress(address newToken) public payable onlyOwner() {
         TokenAddress = newToken;
+        pudu = AbstractPudu(TokenAddress);
     }
 
     function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
@@ -166,4 +174,5 @@ contract TreeQuests is Initializable {
         TreeAddress = newTree;
         tree = AbstractTree(TreeAddress);
     }
+
 }

@@ -6,7 +6,7 @@ import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721U
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
-contract Tree is ERC721Upgradeable {
+contract TreeV3 is ERC721Upgradeable {
     event NewTree(uint treeId);
     event GainExp(uint treeId, uint amount);
     event GainLevel(uint treeId);
@@ -113,28 +113,32 @@ contract Tree is ERC721Upgradeable {
     function upgradeBarracks(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].barracks);
         require(21 > trees[treeId].barracks);
+        require(trees[treeId].onQuestUntil == 0);
         uint amount = trees[treeId].barracks*10**18;
         if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
             uint BasicRuneAmount = (trees[treeId].barracks-10);
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].barracks++;
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*70/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*30/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*90/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, address(0), amount*6/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*4/100);
         emit BuildingLevelUp (treeId, 0);
     }
 
     function upgradeTrainingGrounds(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].trainingGrounds);
         require(21 > trees[treeId].trainingGrounds);
+        require(trees[treeId].onQuestUntil == 0);
         uint amount = trees[treeId].trainingGrounds*10**18;
         if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
             uint BasicRuneAmount = (trees[treeId].trainingGrounds-10);
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].trainingGrounds++;
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*70/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*30/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*90/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, address(0), amount*6/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*4/100);
         emit BuildingLevelUp (treeId, 1);
     }
 
@@ -151,11 +155,13 @@ contract Tree is ERC721Upgradeable {
     function gainLevel(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level < 100 );
         require(trees[treeId].exp >= trees[treeId].level*100);
+        require(trees[treeId].onQuestUntil == 0);
         uint amount = trees[treeId].level*10**18;
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*70/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*30/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*90/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, address(0), amount*6/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*4/100);
         emit GainLevel(treeId);
     }
 
