@@ -8,8 +8,4 @@ import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 abstract contract AbstractPudu is ERC20 {
 
     function mint(address _address, uint amount) public virtual;
-
-    function transferOwnership(address newOwner) public virtual;
-
-    function transferQuestAddress(address newQuest) public virtual; 
 }

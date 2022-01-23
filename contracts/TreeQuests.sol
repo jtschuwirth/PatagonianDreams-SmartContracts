@@ -4,16 +4,16 @@ pragma solidity ^0.8.3;
 import "./AbstractTree.sol";
 import "./AbstractGameItems.sol";
 import "./AbstractPudu.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract TreeQuests is Initializable {
+contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     event StartQuest(uint treeId, uint questId);
     event CompleteQuest(uint treeId, uint questId);
     event CancelQuest(uint treeId, uint questId);
 
-    address ContractOwner;
     address TreasuryAddress;
     address TreeAddress;
     address TokenAddress;
@@ -30,16 +30,11 @@ contract TreeQuests is Initializable {
         _;
     }
 
-    modifier onlyOwner() {
-        require(ContractOwner == msg.sender);
-        _;
-    }
-
     function initialize() initializer public {
-        ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
 
-        totalTreasuryBalance = 1000000000*30/100;
+        totalTreasuryBalance = (1000000000*30*(10**18))/100;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
     
     // Util functions
@@ -83,94 +78,96 @@ contract TreeQuests is Initializable {
 
     //Quest0 Foraging
 
-    function startQuest0(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.questStatus(treeId) == 0);
+    function startQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) == 0);
+        require(tree.currentAction(treeId) == 0);
         uint questDuration = 30*60 - tree.treeTrainingGrounds(treeId)*3*60;
-        tree.updateQuestStatus(treeId, block.timestamp+questDuration);
-        emit StartQuest(treeId, 0);
+        tree.updateAction(treeId, 2, block.timestamp+questDuration);
+        emit StartQuest(treeId, 2);
     }
 
-    function completeQuest0(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.questStatus(treeId) != 0);
-        require(block.timestamp >= tree.questStatus(treeId));
+    function completeQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) != 0);
+        require(tree.currentAction(treeId) == 2);
+        require(block.timestamp >= tree.actionStatus(treeId));
 
         uint expReward = 10;
         uint treeMult = ceil(tree.treeBarracks(treeId),5)/5;
         uint tokenReward = (1*10**18)*treeMult/100;
         
-        tree.updateQuestStatus(treeId, 0);
+        tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
-        if (1000000000 >= IERC20(TokenAddress).totalSupply()+tokenReward ) {
+        if (1000000000*10**18 >= IERC20(TokenAddress).totalSupply()+tokenReward ) {
             pudu.mint(msg.sender, tokenReward);
         } else {
             uint treasuryMult = treasuryMultiplicator();
             tokenReward = tokenReward*treasuryMult/100;
             IERC20(TokenAddress).transferFrom(TreasuryAddress, msg.sender, tokenReward);
         }
-        emit CompleteQuest(treeId, 0);
+        emit CompleteQuest(treeId, 2);
 
     }
 
-    function cancelQuest0(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.questStatus(treeId) != 0);
-        tree.updateQuestStatus(treeId, 0);
-        emit CancelQuest(treeId, 0);
+    function cancelQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) != 0);
+        require(tree.currentAction(treeId) == 2);
+        tree.updateAction(treeId, 0, 0);
+        emit CancelQuest(treeId, 2);
 
     }
 
     //Quest1 Clean Roots
 
-    function startQuest1(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.questStatus(treeId) == 0);
+    function startQuest3(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) == 0);
+        require(tree.currentAction(treeId) == 0);
         uint questDuration = 10*60 - tree.treeTrainingGrounds(treeId)*1*60;
-        tree.updateQuestStatus(treeId, block.timestamp+questDuration);
-        emit StartQuest(treeId, 1);
+        tree.updateAction(treeId, 3, block.timestamp+questDuration);
+        emit StartQuest(treeId, 3);
     }
 
-    function completeQuest1(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.questStatus(treeId) != 0);
-        require(block.timestamp >= tree.questStatus(treeId));
+    function completeQuest3(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) != 0);
+        require(tree.currentAction(treeId) == 3);
+        require(block.timestamp >= tree.actionStatus(treeId));
 
         uint expReward = 100;
         uint rand = uint(keccak256(abi.encodePacked(vrf())));
         uint chance = rand%10;
-        tree.updateQuestStatus(treeId, 0);
+        tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
         if (chance == 0) {
             gameItems.mint(msg.sender, 0, 1);
         }
-        emit CompleteQuest(treeId, 1);
+        emit CompleteQuest(treeId, 3);
 
     }
 
-    function cancelQuest1(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.questStatus(treeId) != 0);
-        tree.updateQuestStatus(treeId, 0);
-        emit CancelQuest(treeId, 1);
+    function cancelQuest3(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) != 0);
+        require(tree.currentAction(treeId) == 3);
+        tree.updateAction(treeId, 0, 0);
+        emit CancelQuest(treeId, 3);
 
     }
 
     //Transfer functions
 
-    function transferOwnership(address newOwner) public payable onlyOwner() {
-        ContractOwner = newOwner;
-    }
-
-    function transferTreasuryAddress(address newTreasury) public payable onlyOwner() {
+    function transferTreasuryAddress(address newTreasury) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         TreasuryAddress = newTreasury;
     }
 
-    function transferTokenAddress(address newToken) public payable onlyOwner() {
+    function transferTokenAddress(address newToken) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         TokenAddress = newToken;
         pudu = AbstractPudu(TokenAddress);
     }
 
-    function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
+    function transferGameItemsAddress(address newGameItems) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         GameItemsAddress = newGameItems;
         gameItems = AbstractGameItems(GameItemsAddress);
     }
 
-    function transferTreeAddress(address newTree) public payable onlyOwner() {
+    function transferTreeAddress(address newTree) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         TreeAddress = newTree;
         tree = AbstractTree(TreeAddress);
     }

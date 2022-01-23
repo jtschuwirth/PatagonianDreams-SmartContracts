@@ -2,41 +2,23 @@
 
 pragma solidity ^0.8.3;
 
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 
-contract GameItems is ERC1155Upgradeable {
+contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
 
-    address ContractOwner;
-    address QuestContract;
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     uint256 public constant BasicRune = 0;
     uint256 public constant IntricateRune = 1;
     uint256 public constant PowerfullRune = 2;
 
-    modifier onlyOwner() {
-        require(ContractOwner == msg.sender);
-        _;
-    }
-
-    modifier onlyQuestContract() {
-        require(QuestContract == msg.sender);
-        _;
-    }
-
     function initialize() initializer public {
-        ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function mint(address _address, uint itemId, uint amount) public payable onlyQuestContract() {
+    function mint(address _address, uint itemId, uint amount) public payable onlyRole(MINTER_ROLE) {
         _mint(_address, itemId, amount, "");
     }
-
-
-    function transferOwnership(address newOwner) public payable onlyOwner() {
-        ContractOwner = newOwner;
-    }
-
-    function transferQuestAddress(address newQuest) public payable onlyOwner() {
-        QuestContract = newQuest;
-    }
+}
 }

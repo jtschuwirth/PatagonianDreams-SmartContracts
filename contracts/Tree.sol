@@ -2,11 +2,15 @@
 
 pragma solidity ^0.8.3;
 
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
-contract TreeV3 is ERC721Upgradeable {
+contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
+
+    bytes32 public constant QUEST_ROLE = keccak256("QUEST_ROLE");
+
     event NewTree(uint treeId);
     event GainExp(uint treeId, uint amount);
     event GainLevel(uint treeId);
@@ -15,11 +19,10 @@ contract TreeV3 is ERC721Upgradeable {
     uint Digits;
     uint Modulus;
 
-    address ContractOwner;
+    address DevelopmentAddress;
     address TreasuryAddress;
     address TokenAddress;
     address GameItemsAddress;
-    address QuestAddress;
 
     struct TreeStruct {
         uint treeDNA;
@@ -27,7 +30,8 @@ contract TreeV3 is ERC721Upgradeable {
         uint exp;
         uint barracks;
         uint trainingGrounds;
-        uint onQuestUntil;
+        uint action;
+        uint onActionUntil;
     }
 
     TreeStruct[] public trees;
@@ -39,23 +43,17 @@ contract TreeV3 is ERC721Upgradeable {
         _;
     }
 
-    modifier onlyOwner() {
-        require(ContractOwner == msg.sender);
-        _;
-    }
-
-    modifier onlyQuestContract() {
-        require(QuestAddress == msg.sender);
-        _;
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     function initialize() initializer public {
         Digits = 16;
         Modulus = 10 ** Digits;
 
-        ContractOwner = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
+        DevelopmentAddress = 0xf577601a5eF1d5079Da672f01D7aB3b80dD2bd1D;
         TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
-
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         __ERC721_init("Patagonic Tree", "PTREE");
     }
 
@@ -95,8 +93,12 @@ contract TreeV3 is ERC721Upgradeable {
         return trees[treeId].trainingGrounds;
     }
 
-    function questStatus(uint treeId) public view returns (uint) {
-        return trees[treeId].onQuestUntil;
+    function actionStatus(uint treeId) public view returns (uint) {
+        return trees[treeId].onActionUntil;
+    }
+
+    function currentAction(uint treeId) public view returns (uint) {
+        return trees[treeId].action;
     }
 
     function currentPrice() public view returns (uint) {
@@ -113,40 +115,39 @@ contract TreeV3 is ERC721Upgradeable {
     function upgradeBarracks(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].barracks);
         require(21 > trees[treeId].barracks);
-        require(trees[treeId].onQuestUntil == 0);
+        require(trees[treeId].action == 0);
         uint amount = trees[treeId].barracks*10**18;
         if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
             uint BasicRuneAmount = (trees[treeId].barracks-10);
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].barracks++;
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*90/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, address(0), amount*6/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*4/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
         emit BuildingLevelUp (treeId, 0);
     }
 
     function upgradeTrainingGrounds(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level > trees[treeId].trainingGrounds);
         require(21 > trees[treeId].trainingGrounds);
-        require(trees[treeId].onQuestUntil == 0);
+        require(trees[treeId].action == 0);
         uint amount = trees[treeId].trainingGrounds*10**18;
         if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
             uint BasicRuneAmount = (trees[treeId].trainingGrounds-10);
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
         trees[treeId].trainingGrounds++;
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*90/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, address(0), amount*6/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*4/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
         emit BuildingLevelUp (treeId, 1);
     }
 
-    function updateQuestStatus(uint treeId, uint newValue) public payable onlyQuestContract() {
-        trees[treeId].onQuestUntil = newValue;
+    function updateAction(uint treeId, uint action, uint time) public payable onlyRole(QUEST_ROLE) {
+        trees[treeId].onActionUntil = time;
+        trees[treeId].action = action;
     }
 
-    function gainExp(uint treeId, uint amount) public payable onlyQuestContract() {
+    function gainExp(uint treeId, uint amount) public payable onlyRole(QUEST_ROLE) {
         //Cambiar a que solo lo pueda hacer el contrato de quests y no el usuario
         trees[treeId].exp = trees[treeId].exp + amount;
         emit GainExp(treeId, amount);
@@ -155,13 +156,12 @@ contract TreeV3 is ERC721Upgradeable {
     function gainLevel(uint treeId) public payable onlyOwnerOf(treeId) {
         require(trees[treeId].level < 100 );
         require(trees[treeId].exp >= trees[treeId].level*100);
-        require(trees[treeId].onQuestUntil == 0);
+        require(trees[treeId].action == 0);
         uint amount = trees[treeId].level*10**18;
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*90/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, address(0), amount*6/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, ContractOwner, amount*4/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
         emit GainLevel(treeId);
     }
 
@@ -170,7 +170,7 @@ contract TreeV3 is ERC721Upgradeable {
         require(msg.value >= currentPrice());
         uint id = trees.length;
         uint DNA = _generateRandomDNA();
-        trees.push(TreeStruct(DNA, 1, 0, 0, 0, 0));
+        trees.push(TreeStruct(DNA, 1, 0, 0, 0, 0, 0));
         _mint(msg.sender, id);
         emit NewTree(id);
 
@@ -178,23 +178,19 @@ contract TreeV3 is ERC721Upgradeable {
 
     //Transfer Functions
 
-    function transferOwnership(address newOwner) public payable onlyOwner() {
-        ContractOwner = newOwner;
+    function transferDevelopmentAddress(address newDevelopment) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+        DevelopmentAddress = newDevelopment;
     }
 
-    function transferTreasuryAddress(address newTreasury) public payable onlyOwner() {
+    function transferTreasuryAddress(address newTreasury) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         TreasuryAddress = newTreasury;
     }
 
-    function transferTokenAddress(address newToken) public payable onlyOwner() {
+    function transferTokenAddress(address newToken) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         TokenAddress = newToken;
     }
 
-    function transferGameItemsAddress(address newGameItems) public payable onlyOwner() {
+    function transferGameItemsAddress(address newGameItems) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
         GameItemsAddress = newGameItems;
-    }
-
-    function transferQuestAddress(address newQuest) public payable onlyOwner() {
-        QuestAddress = newQuest;
     }
 }
