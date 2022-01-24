@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.3;
 
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
@@ -116,6 +116,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         require(trees[treeId].level > trees[treeId].barracks);
         require(21 > trees[treeId].barracks);
         require(trees[treeId].action == 0);
+        //require enough PUDU Balance
         uint amount = trees[treeId].barracks*10**18;
         if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
             uint BasicRuneAmount = (trees[treeId].barracks-10);
@@ -131,6 +132,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         require(trees[treeId].level > trees[treeId].trainingGrounds);
         require(21 > trees[treeId].trainingGrounds);
         require(trees[treeId].action == 0);
+        //require enough PUDU Balance
         uint amount = trees[treeId].trainingGrounds*10**18;
         if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
             uint BasicRuneAmount = (trees[treeId].trainingGrounds-10);
@@ -157,6 +159,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         require(trees[treeId].level < 100 );
         require(trees[treeId].exp >= trees[treeId].level*100);
         require(trees[treeId].action == 0);
+        //require enough PUDU Balance
         uint amount = trees[treeId].level*10**18;
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;

@@ -11,7 +11,7 @@ var TreeABI = TreeJson["abi"];
 var TreeAddress = TreeJson["networks"]["2"]["address"];
 var TreeContract = new web3.eth.Contract(TreeABI, TreeAddress);
 
-var TokenJson = require("../build/contracts/Token.json");
+var TokenJson = require("../build/contracts/Pudu.json");
 var TokenABI = TokenJson["abi"];
 var TokenAddress = TokenJson["networks"]["2"]["address"];
 var TokenContract = new web3.eth.Contract(TokenABI, TokenAddress);
@@ -28,6 +28,7 @@ var GameItemsContract = new web3.eth.Contract(GameItemsABI, GameItemsAddress);
 
 function App() {
     const [Address, setAddress] = useState(null);
+    const [Supply, setSupply] = useState(null);
     const [AddressData, setAddressData] = useState([]);
 
     async function isMetaMaskConnected() {
@@ -99,41 +100,9 @@ function App() {
         }
     }
 
-    async function changeQuestAddress() {
-        try {
-            await TreeContract.methods.transferQuestAddress(QuestAddress).send({from: Address})
-            await GameItemsContract.methods.transferQuestAddress(QuestAddress).send({from: Address})
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    async function changeTreeAddress() {
-        try {
-            await QuestContract.methods.transferTreeAddress(TreeAddress).send({from: Address})
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    async function changeTokenAddress() {
-        try {
-            await TreeContract.methods.transferTokenAddress(TokenAddress).send({from: Address})
-            await QuestContract.methods.transferTokenAddress(TokenAddress).send({from: Address})
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    async function changeGameItemsAddress() {
-        try {
-            await TreeContract.methods.transferGameItemsAddress(GameItemsAddress).send({from: Address})
-            await QuestContract.methods.transferGameItemsAddress(GameItemsAddress).send({from: Address})
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     async function startQuest(id) {
         try {
-            await QuestContract.methods.startQuest1(id).send({from: Address}).then(function(receipt) {
+            await QuestContract.methods.startQuest2(id).send({from: Address}).then(function(receipt) {
                 setTreeData();
             })
         } catch (error) {
@@ -143,7 +112,7 @@ function App() {
 
     async function completeQuest(id) {
         try {
-            await QuestContract.methods.completeQuest1(id).send({from: Address}).then(function(receipt) {
+            await QuestContract.methods.completeQuest2(id).send({from: Address}).then(function(receipt) {
                 setTreeData();
             })
 
@@ -154,7 +123,7 @@ function App() {
 
     async function cancelQuest(id) {
         try {
-            await QuestContract.methods.cancelQuest1(id).send({from: Address}).then(function(receipt) {
+            await QuestContract.methods.cancelQuest2(id).send({from: Address}).then(function(receipt) {
                 setTreeData();
             })
 
@@ -204,7 +173,7 @@ function App() {
             console.error(error);
         }
         try {
-            quest = await TreeContract.methods.questStatus(id).call()
+            quest = await TreeContract.methods.actionStatus(id).call()
         } catch (error) {
             console.error(error);
         }
@@ -233,11 +202,22 @@ function App() {
         )
     }
 
+    async function puduSupply() {
+        try {
+            var supply = await TokenContract.methods.totalSupply().call()
+            supply = supply/(10**18)
+        } catch (error) {
+            console.error(error);
+        }
+        setSupply(supply)
+    }
+
     useEffect(() => {
         isMetaMaskConnected().then((connected) => {
             if (connected) {
                 // metamask is connected
                 connectMetaMask()
+                puduSupply()
             } else {
                 // metamask is not connected
                 setAddress(null)
@@ -249,21 +229,14 @@ function App() {
     return (
         <div>
             <div>{Address}</div>
+            <div>Total Pudu Supply: {Supply}</div>
             <div>
                 <div>
                     <button onClick={ () => connectMetaMask()}>Connect Metamask</button>
                     <button onClick={ () => buyNewTree()}>Buy new Tree</button>
                 </div>
-                <div>
-                    <button onClick={ () => changeQuestAddress()}>Change Questing Address</button>
-                    <button onClick={ () => changeTreeAddress()}>Change Tree Address</button>
-                    <button onClick={ () => changeTokenAddress()}>Change Token Address</button>
-                    <button onClick={ () => changeGameItemsAddress()}>Change GameItems Address</button>
-                </div>
                 <button onClick={ () => approveTreasury()}>Approve Treasury Spending</button>
             </div>
-            <br></br>
-            <div><button onClick={ () => setTreeData()}>Refresh Data</button></div>
             <Table striped bordered hover size="sm" variant="dark">
                 <thead>
                     <tr>

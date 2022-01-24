@@ -2,10 +2,11 @@
 
 pragma solidity ^0.8.3;
 
-import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
-
-abstract contract AbstractPudu is ERC20 {
+abstract contract AbstractPudu {
 
     function mint(address _address, uint amount) public virtual;
+
+    function balanceOf(address _address) public view virtual returns (uint);
+
+    function totalSupply() public view virtual returns (uint);
 }

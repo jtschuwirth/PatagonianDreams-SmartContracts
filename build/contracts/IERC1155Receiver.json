@@ -113,18 +113,18 @@
     "absolutePath": "project:/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
     "exportedSymbols": {
       "IERC1155Receiver": [
-        5899
+        6795
       ],
       "IERC165": [
-        8113
+        9009
       ]
     },
-    "id": 5900,
+    "id": 6796,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5860,
+        "id": 6756,
         "literals": [
           "solidity",
           "^",
@@ -132,17 +132,17 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "103:23:23"
+        "src": "103:23:28"
       },
       {
         "absolutePath": "project:/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol",
         "file": "../../utils/introspection/IERC165.sol",
-        "id": 5861,
+        "id": 6757,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5900,
-        "sourceUnit": 8114,
-        "src": "128:47:23",
+        "scope": 6796,
+        "sourceUnit": 9010,
+        "src": "128:47:28",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -151,64 +151,64 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 5863,
+              "id": 6759,
               "name": "IERC165",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 8113,
-              "src": "247:7:23"
+              "referencedDeclaration": 9009,
+              "src": "247:7:28"
             },
-            "id": 5864,
+            "id": 6760,
             "nodeType": "InheritanceSpecifier",
-            "src": "247:7:23"
+            "src": "247:7:28"
           }
         ],
         "canonicalName": "IERC1155Receiver",
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 5862,
+          "id": 6758,
           "nodeType": "StructuredDocumentation",
-          "src": "177:39:23",
+          "src": "177:39:28",
           "text": " @dev _Available since v3.1._"
         },
         "fullyImplemented": false,
-        "id": 5899,
+        "id": 6795,
         "linearizedBaseContracts": [
-          5899,
-          8113
+          6795,
+          9009
         ],
         "name": "IERC1155Receiver",
-        "nameLocation": "227:16:23",
+        "nameLocation": "227:16:28",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 5865,
+              "id": 6761,
               "nodeType": "StructuredDocumentation",
-              "src": "261:816:23",
+              "src": "261:816:28",
               "text": "@dev Handles the receipt of a single ERC1155 token type. This function is\ncalled at the end of a `safeTransferFrom` after the balance has been updated.\nTo accept the transfer, this must return\n`bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`\n(i.e. 0xf23a6e61, or its own function selector).\n@param operator The address which initiated the transfer (i.e. msg.sender)\n@param from The address which previously owned the token\n@param id The ID of the token being transferred\n@param value The amount of tokens being transferred\n@param data Additional data with no specified format\n@return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed"
             },
             "functionSelector": "f23a6e61",
-            "id": 5880,
+            "id": 6776,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "onERC1155Received",
-            "nameLocation": "1091:17:23",
+            "nameLocation": "1091:17:28",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5876,
+              "id": 6772,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5867,
+                  "id": 6763,
                   "mutability": "mutable",
                   "name": "operator",
-                  "nameLocation": "1126:8:23",
+                  "nameLocation": "1126:8:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1118:16:23",
+                  "scope": 6776,
+                  "src": "1118:16:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -216,10 +216,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5866,
+                    "id": 6762,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1118:7:23",
+                    "src": "1118:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -230,13 +230,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5869,
+                  "id": 6765,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "1152:4:23",
+                  "nameLocation": "1152:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1144:12:23",
+                  "scope": 6776,
+                  "src": "1144:12:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -244,10 +244,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5868,
+                    "id": 6764,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1144:7:23",
+                    "src": "1144:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -258,13 +258,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5871,
+                  "id": 6767,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "1174:2:23",
+                  "nameLocation": "1174:2:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1166:10:23",
+                  "scope": 6776,
+                  "src": "1166:10:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -272,10 +272,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5870,
+                    "id": 6766,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1166:7:23",
+                    "src": "1166:7:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -285,13 +285,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5873,
+                  "id": 6769,
                   "mutability": "mutable",
                   "name": "value",
-                  "nameLocation": "1194:5:23",
+                  "nameLocation": "1194:5:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1186:13:23",
+                  "scope": 6776,
+                  "src": "1186:13:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -299,10 +299,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5872,
+                    "id": 6768,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1186:7:23",
+                    "src": "1186:7:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -312,13 +312,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5875,
+                  "id": 6771,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "1224:4:23",
+                  "nameLocation": "1224:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1209:19:23",
+                  "scope": 6776,
+                  "src": "1209:19:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -326,10 +326,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 5874,
+                    "id": 6770,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1209:5:23",
+                    "src": "1209:5:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -338,21 +338,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1108:126:23"
+              "src": "1108:126:28"
             },
             "returnParameters": {
-              "id": 5879,
+              "id": 6775,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5878,
+                  "id": 6774,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1253:6:23",
+                  "scope": 6776,
+                  "src": "1253:6:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -360,10 +360,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 5877,
+                    "id": 6773,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1253:6:23",
+                    "src": "1253:6:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -372,42 +372,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1252:8:23"
+              "src": "1252:8:28"
             },
-            "scope": 5899,
-            "src": "1082:179:23",
+            "scope": 6795,
+            "src": "1082:179:28",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 5881,
+              "id": 6777,
               "nodeType": "StructuredDocumentation",
-              "src": "1267:977:23",
+              "src": "1267:977:28",
               "text": "@dev Handles the receipt of a multiple ERC1155 token types. This function\nis called at the end of a `safeBatchTransferFrom` after the balances have\nbeen updated. To accept the transfer(s), this must return\n`bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`\n(i.e. 0xbc197c81, or its own function selector).\n@param operator The address which initiated the batch transfer (i.e. msg.sender)\n@param from The address which previously owned the token\n@param ids An array containing ids of each token being transferred (order and length must match values array)\n@param values An array containing amounts of each token being transferred (order and length must match ids array)\n@param data Additional data with no specified format\n@return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed"
             },
             "functionSelector": "bc197c81",
-            "id": 5898,
+            "id": 6794,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "onERC1155BatchReceived",
-            "nameLocation": "2258:22:23",
+            "nameLocation": "2258:22:28",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5894,
+              "id": 6790,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5883,
+                  "id": 6779,
                   "mutability": "mutable",
                   "name": "operator",
-                  "nameLocation": "2298:8:23",
+                  "nameLocation": "2298:8:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2290:16:23",
+                  "scope": 6794,
+                  "src": "2290:16:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -415,10 +415,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5882,
+                    "id": 6778,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2290:7:23",
+                    "src": "2290:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -429,13 +429,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5885,
+                  "id": 6781,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "2324:4:23",
+                  "nameLocation": "2324:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2316:12:23",
+                  "scope": 6794,
+                  "src": "2316:12:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -443,10 +443,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5884,
+                    "id": 6780,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2316:7:23",
+                    "src": "2316:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -457,13 +457,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5888,
+                  "id": 6784,
                   "mutability": "mutable",
                   "name": "ids",
-                  "nameLocation": "2357:3:23",
+                  "nameLocation": "2357:3:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2338:22:23",
+                  "scope": 6794,
+                  "src": "2338:22:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -472,18 +472,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 5886,
+                      "id": 6782,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2338:7:23",
+                      "src": "2338:7:28",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 5887,
+                    "id": 6783,
                     "nodeType": "ArrayTypeName",
-                    "src": "2338:9:23",
+                    "src": "2338:9:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -493,13 +493,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5891,
+                  "id": 6787,
                   "mutability": "mutable",
                   "name": "values",
-                  "nameLocation": "2389:6:23",
+                  "nameLocation": "2389:6:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2370:25:23",
+                  "scope": 6794,
+                  "src": "2370:25:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -508,18 +508,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 5889,
+                      "id": 6785,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2370:7:23",
+                      "src": "2370:7:28",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 5890,
+                    "id": 6786,
                     "nodeType": "ArrayTypeName",
-                    "src": "2370:9:23",
+                    "src": "2370:9:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -529,13 +529,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5893,
+                  "id": 6789,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "2420:4:23",
+                  "nameLocation": "2420:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2405:19:23",
+                  "scope": 6794,
+                  "src": "2405:19:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -543,10 +543,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 5892,
+                    "id": 6788,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2405:5:23",
+                    "src": "2405:5:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -555,21 +555,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2280:150:23"
+              "src": "2280:150:28"
             },
             "returnParameters": {
-              "id": 5897,
+              "id": 6793,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5896,
+                  "id": 6792,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2449:6:23",
+                  "scope": 6794,
+                  "src": "2449:6:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -577,10 +577,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 5895,
+                    "id": 6791,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2449:6:23",
+                    "src": "2449:6:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -589,38 +589,38 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2448:8:23"
+              "src": "2448:8:28"
             },
-            "scope": 5899,
-            "src": "2249:208:23",
+            "scope": 6795,
+            "src": "2249:208:28",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 5900,
-        "src": "217:2242:23",
+        "scope": 6796,
+        "src": "217:2242:28",
         "usedErrors": []
       }
     ],
-    "src": "103:2357:23"
+    "src": "103:2357:28"
   },
   "legacyAST": {
     "absolutePath": "project:/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
     "exportedSymbols": {
       "IERC1155Receiver": [
-        5899
+        6795
       ],
       "IERC165": [
-        8113
+        9009
       ]
     },
-    "id": 5900,
+    "id": 6796,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5860,
+        "id": 6756,
         "literals": [
           "solidity",
           "^",
@@ -628,17 +628,17 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "103:23:23"
+        "src": "103:23:28"
       },
       {
         "absolutePath": "project:/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol",
         "file": "../../utils/introspection/IERC165.sol",
-        "id": 5861,
+        "id": 6757,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5900,
-        "sourceUnit": 8114,
-        "src": "128:47:23",
+        "scope": 6796,
+        "sourceUnit": 9010,
+        "src": "128:47:28",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -647,64 +647,64 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 5863,
+              "id": 6759,
               "name": "IERC165",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 8113,
-              "src": "247:7:23"
+              "referencedDeclaration": 9009,
+              "src": "247:7:28"
             },
-            "id": 5864,
+            "id": 6760,
             "nodeType": "InheritanceSpecifier",
-            "src": "247:7:23"
+            "src": "247:7:28"
           }
         ],
         "canonicalName": "IERC1155Receiver",
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 5862,
+          "id": 6758,
           "nodeType": "StructuredDocumentation",
-          "src": "177:39:23",
+          "src": "177:39:28",
           "text": " @dev _Available since v3.1._"
         },
         "fullyImplemented": false,
-        "id": 5899,
+        "id": 6795,
         "linearizedBaseContracts": [
-          5899,
-          8113
+          6795,
+          9009
         ],
         "name": "IERC1155Receiver",
-        "nameLocation": "227:16:23",
+        "nameLocation": "227:16:28",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 5865,
+              "id": 6761,
               "nodeType": "StructuredDocumentation",
-              "src": "261:816:23",
+              "src": "261:816:28",
               "text": "@dev Handles the receipt of a single ERC1155 token type. This function is\ncalled at the end of a `safeTransferFrom` after the balance has been updated.\nTo accept the transfer, this must return\n`bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`\n(i.e. 0xf23a6e61, or its own function selector).\n@param operator The address which initiated the transfer (i.e. msg.sender)\n@param from The address which previously owned the token\n@param id The ID of the token being transferred\n@param value The amount of tokens being transferred\n@param data Additional data with no specified format\n@return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed"
             },
             "functionSelector": "f23a6e61",
-            "id": 5880,
+            "id": 6776,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "onERC1155Received",
-            "nameLocation": "1091:17:23",
+            "nameLocation": "1091:17:28",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5876,
+              "id": 6772,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5867,
+                  "id": 6763,
                   "mutability": "mutable",
                   "name": "operator",
-                  "nameLocation": "1126:8:23",
+                  "nameLocation": "1126:8:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1118:16:23",
+                  "scope": 6776,
+                  "src": "1118:16:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -712,10 +712,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5866,
+                    "id": 6762,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1118:7:23",
+                    "src": "1118:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -726,13 +726,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5869,
+                  "id": 6765,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "1152:4:23",
+                  "nameLocation": "1152:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1144:12:23",
+                  "scope": 6776,
+                  "src": "1144:12:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -740,10 +740,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5868,
+                    "id": 6764,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1144:7:23",
+                    "src": "1144:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -754,13 +754,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5871,
+                  "id": 6767,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "1174:2:23",
+                  "nameLocation": "1174:2:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1166:10:23",
+                  "scope": 6776,
+                  "src": "1166:10:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -768,10 +768,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5870,
+                    "id": 6766,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1166:7:23",
+                    "src": "1166:7:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -781,13 +781,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5873,
+                  "id": 6769,
                   "mutability": "mutable",
                   "name": "value",
-                  "nameLocation": "1194:5:23",
+                  "nameLocation": "1194:5:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1186:13:23",
+                  "scope": 6776,
+                  "src": "1186:13:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -795,10 +795,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5872,
+                    "id": 6768,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1186:7:23",
+                    "src": "1186:7:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -808,13 +808,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5875,
+                  "id": 6771,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "1224:4:23",
+                  "nameLocation": "1224:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1209:19:23",
+                  "scope": 6776,
+                  "src": "1209:19:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -822,10 +822,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 5874,
+                    "id": 6770,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1209:5:23",
+                    "src": "1209:5:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -834,21 +834,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1108:126:23"
+              "src": "1108:126:28"
             },
             "returnParameters": {
-              "id": 5879,
+              "id": 6775,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5878,
+                  "id": 6774,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5880,
-                  "src": "1253:6:23",
+                  "scope": 6776,
+                  "src": "1253:6:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -856,10 +856,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 5877,
+                    "id": 6773,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1253:6:23",
+                    "src": "1253:6:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -868,42 +868,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1252:8:23"
+              "src": "1252:8:28"
             },
-            "scope": 5899,
-            "src": "1082:179:23",
+            "scope": 6795,
+            "src": "1082:179:28",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 5881,
+              "id": 6777,
               "nodeType": "StructuredDocumentation",
-              "src": "1267:977:23",
+              "src": "1267:977:28",
               "text": "@dev Handles the receipt of a multiple ERC1155 token types. This function\nis called at the end of a `safeBatchTransferFrom` after the balances have\nbeen updated. To accept the transfer(s), this must return\n`bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`\n(i.e. 0xbc197c81, or its own function selector).\n@param operator The address which initiated the batch transfer (i.e. msg.sender)\n@param from The address which previously owned the token\n@param ids An array containing ids of each token being transferred (order and length must match values array)\n@param values An array containing amounts of each token being transferred (order and length must match ids array)\n@param data Additional data with no specified format\n@return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed"
             },
             "functionSelector": "bc197c81",
-            "id": 5898,
+            "id": 6794,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "onERC1155BatchReceived",
-            "nameLocation": "2258:22:23",
+            "nameLocation": "2258:22:28",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5894,
+              "id": 6790,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5883,
+                  "id": 6779,
                   "mutability": "mutable",
                   "name": "operator",
-                  "nameLocation": "2298:8:23",
+                  "nameLocation": "2298:8:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2290:16:23",
+                  "scope": 6794,
+                  "src": "2290:16:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -911,10 +911,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5882,
+                    "id": 6778,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2290:7:23",
+                    "src": "2290:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -925,13 +925,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5885,
+                  "id": 6781,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "2324:4:23",
+                  "nameLocation": "2324:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2316:12:23",
+                  "scope": 6794,
+                  "src": "2316:12:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -939,10 +939,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5884,
+                    "id": 6780,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2316:7:23",
+                    "src": "2316:7:28",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -953,13 +953,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5888,
+                  "id": 6784,
                   "mutability": "mutable",
                   "name": "ids",
-                  "nameLocation": "2357:3:23",
+                  "nameLocation": "2357:3:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2338:22:23",
+                  "scope": 6794,
+                  "src": "2338:22:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -968,18 +968,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 5886,
+                      "id": 6782,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2338:7:23",
+                      "src": "2338:7:28",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 5887,
+                    "id": 6783,
                     "nodeType": "ArrayTypeName",
-                    "src": "2338:9:23",
+                    "src": "2338:9:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -989,13 +989,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5891,
+                  "id": 6787,
                   "mutability": "mutable",
                   "name": "values",
-                  "nameLocation": "2389:6:23",
+                  "nameLocation": "2389:6:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2370:25:23",
+                  "scope": 6794,
+                  "src": "2370:25:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -1004,18 +1004,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 5889,
+                      "id": 6785,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2370:7:23",
+                      "src": "2370:7:28",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 5890,
+                    "id": 6786,
                     "nodeType": "ArrayTypeName",
-                    "src": "2370:9:23",
+                    "src": "2370:9:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1025,13 +1025,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 5893,
+                  "id": 6789,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "2420:4:23",
+                  "nameLocation": "2420:4:28",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2405:19:23",
+                  "scope": 6794,
+                  "src": "2405:19:28",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -1039,10 +1039,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 5892,
+                    "id": 6788,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2405:5:23",
+                    "src": "2405:5:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -1051,21 +1051,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2280:150:23"
+              "src": "2280:150:28"
             },
             "returnParameters": {
-              "id": 5897,
+              "id": 6793,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5896,
+                  "id": 6792,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5898,
-                  "src": "2449:6:23",
+                  "scope": 6794,
+                  "src": "2449:6:28",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1073,10 +1073,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 5895,
+                    "id": 6791,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2449:6:23",
+                    "src": "2449:6:28",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -1085,21 +1085,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2448:8:23"
+              "src": "2448:8:28"
             },
-            "scope": 5899,
-            "src": "2249:208:23",
+            "scope": 6795,
+            "src": "2249:208:28",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 5900,
-        "src": "217:2242:23",
+        "scope": 6796,
+        "src": "217:2242:28",
         "usedErrors": []
       }
     ],
-    "src": "103:2357:23"
+    "src": "103:2357:28"
   },
   "compiler": {
     "name": "solc",
@@ -1107,7 +1107,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-16T16:02:17.978Z",
+  "updatedAt": "2022-01-24T23:23:28.406Z",
   "devdoc": {
     "details": "_Available since v3.1._",
     "kind": "dev",

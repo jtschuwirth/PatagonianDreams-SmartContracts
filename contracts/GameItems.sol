@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.3;
 
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 
 contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
@@ -13,6 +13,10 @@ contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
     uint256 public constant IntricateRune = 1;
     uint256 public constant PowerfullRune = 2;
 
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC1155Upgradeable, AccessControlUpgradeable) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
+
     function initialize() initializer public {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
@@ -20,5 +24,4 @@ contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
     function mint(address _address, uint itemId, uint amount) public payable onlyRole(MINTER_ROLE) {
         _mint(_address, itemId, amount, "");
     }
-}
 }

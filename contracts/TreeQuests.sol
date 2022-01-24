@@ -4,7 +4,7 @@ pragma solidity ^0.8.3;
 import "./AbstractTree.sol";
 import "./AbstractGameItems.sol";
 import "./AbstractPudu.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -44,7 +44,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     }
 
     function treasuryMultiplicator() public view returns (uint) {
-        uint currentTreasuryBalance = IERC20(TokenAddress).balanceOf(TreasuryAddress);
+        uint currentTreasuryBalance = pudu.balanceOf(TreasuryAddress);
         if (currentTreasuryBalance >= totalTreasuryBalance*5/100) {
             return 100;
         } else if (currentTreasuryBalance >= totalTreasuryBalance*4/100) {
@@ -81,7 +81,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     function startQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) == 0);
         require(tree.currentAction(treeId) == 0);
-        uint questDuration = 30*60 - tree.treeTrainingGrounds(treeId)*3*60;
+        uint questDuration = 1*60 - tree.treeTrainingGrounds(treeId)*3*60;
         tree.updateAction(treeId, 2, block.timestamp+questDuration);
         emit StartQuest(treeId, 2);
     }
@@ -92,18 +92,14 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
         require(block.timestamp >= tree.actionStatus(treeId));
 
         uint expReward = 10;
-        uint treeMult = ceil(tree.treeBarracks(treeId),5)/5;
-        uint tokenReward = (1*10**18)*treeMult/100;
-        
+        uint tokenReward = (1*10**18);
+
+        require(1000000000*10**18 >= pudu.totalSupply()+tokenReward);
+
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
-        if (1000000000*10**18 >= IERC20(TokenAddress).totalSupply()+tokenReward ) {
-            pudu.mint(msg.sender, tokenReward);
-        } else {
-            uint treasuryMult = treasuryMultiplicator();
-            tokenReward = tokenReward*treasuryMult/100;
-            IERC20(TokenAddress).transferFrom(TreasuryAddress, msg.sender, tokenReward);
-        }
+        pudu.mint(msg.sender, tokenReward);
+
         emit CompleteQuest(treeId, 2);
 
     }
