@@ -39,29 +39,6 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     
     // Util functions
 
-    function ceil(uint _a, uint _m) internal pure returns (uint ) {
-        return ((_a + _m - 1) / _m) * _m;
-    }
-
-    function treasuryMultiplicator() public view returns (uint) {
-        uint currentTreasuryBalance = pudu.balanceOf(TreasuryAddress);
-        if (currentTreasuryBalance >= totalTreasuryBalance*5/100) {
-            return 100;
-        } else if (currentTreasuryBalance >= totalTreasuryBalance*4/100) {
-            return 80;
-        } else if (currentTreasuryBalance >= totalTreasuryBalance*3/100) {
-            return 60;
-        } else if (currentTreasuryBalance >= totalTreasuryBalance*2/100) {
-            return 40;
-        } else if (currentTreasuryBalance >= totalTreasuryBalance*1/100) {
-            return 20;
-        } else if (currentTreasuryBalance >= totalTreasuryBalance*1/1000) {
-            return 5;
-        } else {
-            return 0;
-        }
-    }
-
     function vrf() public view returns (bytes32 result) {
         uint[1] memory bn;
         bn[0] = block.number;
@@ -76,55 +53,71 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     //Payable Functions
 
-    //Quest0 Foraging
-
-    function startQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
+    function startQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) == 0);
         require(tree.currentAction(treeId) == 0);
-        uint questDuration = 1*60 - tree.treeTrainingGrounds(treeId)*3*60;
-        tree.updateAction(treeId, 2, block.timestamp+questDuration);
-        emit StartQuest(treeId, 2);
+        if (questId == 1) {
+            startQuest1(treeId);
+        } else if (questId == 2) {
+            startQuest2(treeId);
+        }
     }
 
-    function completeQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
+    function completeQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) != 0);
-        require(tree.currentAction(treeId) == 2);
+        if (questId == 1) {
+            completeQuest1(treeId);
+        } else if (questId == 2) {
+            completeQuest2(treeId);
+        }
+    }
+
+    function cancelQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
+        require(tree.actionStatus(treeId) != 0);
+        if (questId == 1) {
+            cancelQuest1(treeId);
+        } else if (questId == 2) {
+            cancelQuest2(treeId);
+        }
+    }
+
+    function startQuest1(uint treeId) internal {
+        uint questDuration = 1*60 - tree.treeBranches(treeId)*1;
+        tree.updateAction(treeId, 1, block.timestamp+questDuration);
+        emit StartQuest(treeId, 1);
+    }
+
+    function completeQuest1(uint treeId) internal {
+        require(tree.currentAction(treeId) == 1);
         require(block.timestamp >= tree.actionStatus(treeId));
 
-        uint expReward = 10;
-        uint tokenReward = (1*10**18);
-
+        uint expReward = 100;
+        uint tokenReward = (10**18)*tree.treeRoots(treeId)*110/100;
         require(1000000000*10**18 >= pudu.totalSupply()+tokenReward);
 
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
         pudu.mint(msg.sender, tokenReward);
 
-        emit CompleteQuest(treeId, 2);
+        emit CompleteQuest(treeId, 1);
 
     }
 
-    function cancelQuest2(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) != 0);
-        require(tree.currentAction(treeId) == 2);
+    function cancelQuest1(uint treeId) internal {
+        require(tree.currentAction(treeId) == 1);
         tree.updateAction(treeId, 0, 0);
-        emit CancelQuest(treeId, 2);
+        emit CancelQuest(treeId, 1);
 
     }
 
-    //Quest1 Clean Roots
-
-    function startQuest3(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) == 0);
-        require(tree.currentAction(treeId) == 0);
-        uint questDuration = 10*60 - tree.treeTrainingGrounds(treeId)*1*60;
-        tree.updateAction(treeId, 3, block.timestamp+questDuration);
-        emit StartQuest(treeId, 3);
+    function startQuest2(uint treeId) internal {
+        uint questDuration = 10*60 - tree.treeBranches(treeId)*1*60;
+        tree.updateAction(treeId, 2, block.timestamp+questDuration);
+        emit StartQuest(treeId, 2);
     }
 
-    function completeQuest3(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) != 0);
-        require(tree.currentAction(treeId) == 3);
+    function completeQuest2(uint treeId) internal {
+        require(tree.currentAction(treeId) == 2);
         require(block.timestamp >= tree.actionStatus(treeId));
 
         uint expReward = 100;
@@ -135,15 +128,14 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
         if (chance == 0) {
             gameItems.mint(msg.sender, 0, 1);
         }
-        emit CompleteQuest(treeId, 3);
+        emit CompleteQuest(treeId, 2);
 
     }
 
-    function cancelQuest3(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) != 0);
-        require(tree.currentAction(treeId) == 3);
+    function cancelQuest2(uint treeId) internal {
+        require(tree.currentAction(treeId) == 2);
         tree.updateAction(treeId, 0, 0);
-        emit CancelQuest(treeId, 3);
+        emit CancelQuest(treeId, 2);
 
     }
 

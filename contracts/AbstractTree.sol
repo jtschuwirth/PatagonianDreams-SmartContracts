@@ -13,9 +13,9 @@ abstract contract AbstractTree is ERC721 {
 
     function treeExp(uint treeId) public virtual returns (uint);
 
-    function treeBarracks(uint treeId) public virtual returns (uint);
+    function treeRoots(uint treeId) public virtual returns (uint);
 
-    function treeTrainingGrounds(uint treeId) public virtual returns (uint);
+    function treeBranches(uint treeId) public virtual returns (uint);
 
     function actionStatus(uint treeId) public virtual returns (uint);
 
@@ -25,9 +25,9 @@ abstract contract AbstractTree is ERC721 {
 
     //Payable Functions
 
-    function upgradeBarracks(uint treeId) public virtual;
+    function upgradeRoots(uint treeId) public virtual;
 
-    function upgradeTrainingGrounds(uint treeId) public virtual;
+    function upgradeBranches(uint treeId) public virtual;
 
     function updateAction(uint treeId, uint action, uint value) public virtual;
 

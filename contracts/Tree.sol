@@ -28,8 +28,8 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         uint treeDNA;
         uint level;
         uint exp;
-        uint barracks;
-        uint trainingGrounds;
+        uint roots;
+        uint branches;
         uint action;
         uint onActionUntil;
     }
@@ -85,12 +85,12 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         return trees[treeId].exp;
     }
 
-    function treeBarracks(uint treeId) public view returns (uint) {
-        return trees[treeId].barracks;
+    function treeRoots(uint treeId) public view returns (uint) {
+        return trees[treeId].roots;
     }
 
-    function treeTrainingGrounds(uint treeId) public view returns (uint) {
-        return trees[treeId].trainingGrounds;
+    function treeBranches(uint treeId) public view returns (uint) {
+        return trees[treeId].branches;
     }
 
     function actionStatus(uint treeId) public view returns (uint) {
@@ -102,7 +102,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     function currentPrice() public view returns (uint) {
-        return ((trees.length+1)*1)*10**18;
+        return (trees.length+1)*10**18;
     }
 
     function _generateRandomDNA() internal view returns (uint) {
@@ -112,33 +112,35 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
 
     //Payable Functions
 
-    function upgradeBarracks(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(trees[treeId].level > trees[treeId].barracks);
-        require(21 > trees[treeId].barracks);
+    function upgradeRoots(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(trees[treeId].level > trees[treeId].roots);
+        require(21 > trees[treeId].roots);
         require(trees[treeId].action == 0);
-        //require enough PUDU Balance
-        uint amount = trees[treeId].barracks*10**18;
-        if (trees[treeId].barracks > 10 && trees[treeId].barracks < 21) {
-            uint BasicRuneAmount = (trees[treeId].barracks-10);
+        uint amount = trees[treeId].roots*10**18;
+        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
+        
+        if (trees[treeId].roots > 10 && trees[treeId].roots < 21) {
+            uint BasicRuneAmount = (trees[treeId].roots-10);
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
-        trees[treeId].barracks++;
+        trees[treeId].roots++;
         IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
         IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
         emit BuildingLevelUp (treeId, 0);
     }
 
-    function upgradeTrainingGrounds(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(trees[treeId].level > trees[treeId].trainingGrounds);
-        require(21 > trees[treeId].trainingGrounds);
+    function upgradeBranches(uint treeId) public payable onlyOwnerOf(treeId) {
+        require(trees[treeId].level > trees[treeId].branches);
+        require(21 > trees[treeId].branches);
         require(trees[treeId].action == 0);
-        //require enough PUDU Balance
-        uint amount = trees[treeId].trainingGrounds*10**18;
-        if (trees[treeId].trainingGrounds > 10 && trees[treeId].trainingGrounds < 21) {
-            uint BasicRuneAmount = (trees[treeId].trainingGrounds-10);
+        uint amount = trees[treeId].branches*10**18;
+        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
+
+        if (trees[treeId].branches > 10 && trees[treeId].branches < 21) {
+            uint BasicRuneAmount = (trees[treeId].branches-10);
             IERC1155(GameItemsAddress).safeTransferFrom(msg.sender, address(0), 0, BasicRuneAmount, "");
         }
-        trees[treeId].trainingGrounds++;
+        trees[treeId].branches++;
         IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
         IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
         emit BuildingLevelUp (treeId, 1);
@@ -150,7 +152,6 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     function gainExp(uint treeId, uint amount) public payable onlyRole(QUEST_ROLE) {
-        //Cambiar a que solo lo pueda hacer el contrato de quests y no el usuario
         trees[treeId].exp = trees[treeId].exp + amount;
         emit GainExp(treeId, amount);
     }
@@ -173,7 +174,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         require(msg.value >= currentPrice());
         uint id = trees.length;
         uint DNA = _generateRandomDNA();
-        trees.push(TreeStruct(DNA, 1, 0, 0, 0, 0, 0));
+        trees.push(TreeStruct(DNA, 1, 0, 1, 1, 0, 0));
         _mint(msg.sender, id);
         emit NewTree(id);
 

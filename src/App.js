@@ -78,8 +78,9 @@ function App() {
             console.error(error);
         }
     }
+    
 
-    async function requestCurrentLevelPrice(id) {
+    async function requestLevelPrice(id) {
         let currentPrice;
         try {
             currentPrice = await TreeContract.methods.treeLevel(id).call()
