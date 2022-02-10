@@ -22,11 +22,11 @@ contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function mint(address _address, uint itemId, uint amount) public payable onlyRole(MINTER_ROLE) {
+    function mint(address _address, uint itemId, uint amount) public onlyRole(MINTER_ROLE) {
         _mint(_address, itemId, amount, "");
     }
 
-    function burn(address from, uint id, uint amount) public payable onlyRole(BURNER_ROLE) {
+    function burn(address from, uint id, uint amount) public onlyRole(BURNER_ROLE) {
         _burn(from, id, amount);
     }
 }

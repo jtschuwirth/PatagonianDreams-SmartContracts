@@ -5,7 +5,6 @@ import "./AbstractTree.sol";
 import "./AbstractGameItems.sol";
 import "./AbstractPudu.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 contract TreeQuests is Initializable, AccessControlUpgradeable {
@@ -63,7 +62,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
         return length;
     }
 
-    function startQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
+    function startQuest(uint treeId, uint questId) public onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) == 0);
         require(tree.currentAction(treeId) == 0);
         if (questId == 1) {
@@ -73,7 +72,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
         }
     }
 
-    function completeQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
+    function completeQuest(uint treeId, uint questId) public onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) != 0);
         require(block.timestamp >= tree.actionStatus(treeId));
         if (questId == 1) {
@@ -83,7 +82,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
         }
     }
 
-    function cancelQuest(uint treeId) public payable onlyOwnerOf(treeId) {
+    function cancelQuest(uint treeId) public onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) != 0);
         tree.updateAction(treeId, 0, 0);
         emit CancelQuest(treeId);
@@ -143,21 +142,21 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     //Transfer functions
 
-    function transferTreasuryAddress(address newTreasury) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferTreasuryAddress(address newTreasury) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TreasuryAddress = newTreasury;
     }
 
-    function transferTokenAddress(address newToken) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferTokenAddress(address newToken) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TokenAddress = newToken;
         pudu = AbstractPudu(TokenAddress);
     }
 
-    function transferGameItemsAddress(address newGameItems) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferGameItemsAddress(address newGameItems) public onlyRole(DEFAULT_ADMIN_ROLE) {
         GameItemsAddress = newGameItems;
         gameItems = AbstractGameItems(GameItemsAddress);
     }
 
-    function transferTreeAddress(address newTree) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferTreeAddress(address newTree) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TreeAddress = newTree;
         tree = AbstractTree(TreeAddress);
     }

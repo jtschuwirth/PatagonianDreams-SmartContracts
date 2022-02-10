@@ -11,11 +11,12 @@ import "../node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
 
     bytes32 public constant QUEST_ROLE = keccak256("QUEST_ROLE");
+    bytes32 public constant UPG_ROLE = keccak256("UPG_ROLE");
 
     event NewTree(uint treeId);
     event GainExp(uint treeId, uint amount);
     event GainLevel(uint treeId);
-    event StatLevelUp (uint treeId, string stat);
+    event StatLevelUp (uint treeId, uint statId);
 
     uint Digits;
     uint Modulus;
@@ -23,7 +24,6 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     address DevelopmentAddress;
     address TreasuryAddress;
     address TokenAddress;
-    address GameItemsAddress;
 
     struct TreeStruct {
         uint treeDNA;
@@ -36,14 +36,8 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     TreeStruct[] public trees;
-    AbstractGameItems gameItems;
 
     //Modifiers
-
-    modifier onlyOwnerOf(uint _treeId) {
-        require(ownerOf(_treeId) == msg.sender);
-        _;
-    }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
         return super.supportsInterface(interfaceId);
@@ -117,117 +111,46 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         return quantity;
     }
 
-    //Internal Functions
+    //Public Functions
 
-    function levelUpBranches(uint treeId, uint amount) internal {
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
-        trees[treeId].branches++;
-    }
-    function levelUpRoots(uint treeId, uint amount) internal {
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
-        trees[treeId].roots++;
-    }
-
-    //Payable Functions
-
-    function upgradeRoots(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(trees[treeId].level > trees[treeId].roots);
-        require(21 > trees[treeId].roots);
-        require(trees[treeId].action == 0);
-        uint amount = trees[treeId].roots*10**18;
-        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
-        
-        if (trees[treeId].roots > 0 && trees[treeId].roots < 2) {
-            levelUpRoots(treeId, amount);
-        } else if (trees[treeId].roots > 1 && trees[treeId].roots < 3) {
-            uint BasicRuneAmount = (trees[treeId].roots);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            levelUpRoots(treeId, amount);
-        } else if (trees[treeId].roots > 2 && trees[treeId].roots < 5) {
-            uint BasicRuneAmount = (trees[treeId].roots);
-            uint IntricateRuneAmount = (trees[treeId].roots);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            gameItems.burn(msg.sender, 1, IntricateRuneAmount);
-            levelUpRoots(treeId, amount);
-        } else if (trees[treeId].roots > 3 && trees[treeId].roots < 21) {
-            uint BasicRuneAmount = (trees[treeId].roots);
-            uint IntricateRuneAmount = (trees[treeId].roots);
-            uint PowerfullRuneAmount = (trees[treeId].roots);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 2) >= PowerfullRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            gameItems.burn(msg.sender, 0, IntricateRuneAmount);
-            gameItems.burn(msg.sender, 0, PowerfullRuneAmount);
-            levelUpRoots(treeId, amount);
-        }
-        emit StatLevelUp (treeId, "roots");
-    }
-
-    function upgradeBranches(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(trees[treeId].level > trees[treeId].branches);
-        require(21 > trees[treeId].branches);
-        require(trees[treeId].action == 0);
-        uint amount = trees[treeId].branches*10**18;
-        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
-
-        if (trees[treeId].branches > 0 && trees[treeId].branches < 2) {
-            levelUpBranches(treeId, amount);
-        } else if (trees[treeId].branches > 1 && trees[treeId].branches < 3) {
-            uint BasicRuneAmount = (trees[treeId].branches);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            levelUpBranches(treeId, amount);
-        } else if (trees[treeId].branches > 2 && trees[treeId].branches < 4) {
-            uint BasicRuneAmount = (trees[treeId].branches);
-            uint IntricateRuneAmount = (trees[treeId].branches);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            gameItems.burn(msg.sender, 1, IntricateRuneAmount);
-            levelUpBranches(treeId, amount);
-        } else if (trees[treeId].branches > 3 && trees[treeId].branches < 21) {
-            uint BasicRuneAmount = (trees[treeId].branches);
-            uint IntricateRuneAmount = (trees[treeId].branches);
-            uint PowerfullRuneAmount = (trees[treeId].branches);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 2) >= PowerfullRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            gameItems.burn(msg.sender, 0, IntricateRuneAmount);
-            gameItems.burn(msg.sender, 0, PowerfullRuneAmount);
-            levelUpBranches(treeId, amount);
-        }
-        emit StatLevelUp (treeId, "branches");
-    }
-
-    function updateAction(uint treeId, uint action, uint time) public payable onlyRole(QUEST_ROLE) {
-        trees[treeId].onActionUntil = time;
-        trees[treeId].action = action;
-    }
-
-    function gainExp(uint treeId, uint amount) public payable onlyRole(QUEST_ROLE) {
-        trees[treeId].exp = trees[treeId].exp + amount;
-        emit GainExp(treeId, amount);
-    }
-
-    function gainLevel(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(trees[treeId].level < 100 );
-        require(trees[treeId].exp >= trees[treeId].level*100);
-        require(trees[treeId].action == 0);
-        //require enough PUDU Balance
+    function gainLevel(uint treeId) public onlyRole(UPG_ROLE) {
         uint amount = trees[treeId].level*10**18;
+        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
         IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
         IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;
         emit GainLevel(treeId);
     }
+
+    function gainExp(uint treeId, uint amount) public onlyRole(QUEST_ROLE) {
+        trees[treeId].exp = trees[treeId].exp + amount;
+        emit GainExp(treeId, amount);
+    }
+
+    function levelUpBranches(uint treeId) public onlyRole(UPG_ROLE) {
+        uint amount = trees[treeId].branches*10**18;
+        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
+        trees[treeId].branches++;
+        emit StatLevelUp (treeId, 0);
+    }
+    function levelUpRoots(uint treeId) public onlyRole(UPG_ROLE) {
+        uint amount = trees[treeId].roots*10**18;
+        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
+        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
+        trees[treeId].roots++;
+        emit StatLevelUp (treeId, 1);
+    }
+
+    function updateAction(uint treeId, uint action, uint time) public onlyRole(QUEST_ROLE) {
+        trees[treeId].onActionUntil = time;
+        trees[treeId].action = action;
+    }
+
+    //Payable Functions
 
     function createNewTree() public payable {
         require(msg.sender != address(0) && msg.sender != address(this));
@@ -242,20 +165,16 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
 
     //Transfer Functions
 
-    function transferDevelopmentAddress(address newDevelopment) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferDevelopmentAddress(address newDevelopment) public onlyRole(DEFAULT_ADMIN_ROLE) {
         DevelopmentAddress = newDevelopment;
     }
 
-    function transferTreasuryAddress(address newTreasury) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferTreasuryAddress(address newTreasury) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TreasuryAddress = newTreasury;
     }
 
-    function transferTokenAddress(address newToken) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferTokenAddress(address newToken) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TokenAddress = newToken;
     }
 
-    function transferGameItemsAddress(address newGameItems) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
-        GameItemsAddress = newGameItems;
-        gameItems = AbstractGameItems(GameItemsAddress);
-    }
 }

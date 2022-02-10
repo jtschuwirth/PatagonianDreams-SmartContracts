@@ -27,9 +27,9 @@ abstract contract AbstractTree is ERC721 {
 
     //Payable Functions
 
-    function upgradeRoots(uint treeId) public virtual;
+    function levelUpRoots(uint treeId) public virtual;
 
-    function upgradeBranches(uint treeId) public virtual;
+    function levelUpBranches(uint treeId) public virtual;
 
     function updateAction(uint treeId, uint action, uint value) public virtual;
 

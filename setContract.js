@@ -29,6 +29,11 @@ var GameItemsABI = GameItemsJson["abi"];
 var GameItemsAddress = GameItemsJson["networks"]["2"]["address"];
 var GameItemsContract = new web3.eth.Contract(GameItemsABI, GameItemsAddress);
 
+var TreeUpgJson = require("./build/contracts/TreeUpg.json");
+var TreeUpgABI = TreeUpgJson["abi"];
+var TreeUpgAddress = TreeUpgJson["networks"]["2"]["address"];
+var TreeUpgContract = new web3.eth.Contract(TreeUpgABI, TreeUpgAddress);
+
 function tx1() {
     var encodedABI = GameItemsContract.methods.grantRole(web3.utils.keccak256("MINTER_ROLE"), QuestAddress).encodeABI();
     var tx = {
@@ -118,10 +123,10 @@ function tx4() {
 }
 
 function tx5() {
-    var encodedABI = TreeContract.methods.transferGameItemsAddress(GameItemsAddress).encodeABI();
+    var encodedABI = TreeUpgContract.methods.transferGameItemsAddress(GameItemsAddress).encodeABI();
     var tx = {
         from: account.address,
-        to: TreeAddress,
+        to: TreeUpgAddress,
         gasPrice: 1000000000000,
         gasLimit: 1000000,
         data: encodedABI,
@@ -206,7 +211,7 @@ function tx8() {
 
 }
 function tx9() {
-    var encodedABI = GameItemsContract.methods.grantRole(web3.utils.keccak256("BURNER_ROLE"), TreeAddress).encodeABI();
+    var encodedABI = GameItemsContract.methods.grantRole(web3.utils.keccak256("BURNER_ROLE"), TreeUpgAddress).encodeABI();
     var tx = {
         from: account.address,
         to: GameItemsAddress,
@@ -219,10 +224,56 @@ function tx9() {
         console.log("tx Signed")
         web3.eth.sendSignedTransaction(data.rawTransaction).on("receipt", function(receipt) {
             console.log(receipt)
+            tx10()
         }).on('error', function(error){
             console.log(error)
         })
     });
 }
+
+function tx10() {
+    var encodedABI = TreeUpgContract.methods.transferTreeAddress(TreeAddress).encodeABI();
+    var tx = {
+        from: account.address,
+        to: TreeUpgAddress,
+        gasPrice: 1000000000000,
+        gasLimit: 1000000,
+        data: encodedABI,
+    };
+
+    console.log("starting tx 10")
+    web3.eth.accounts.signTransaction(tx, account.privateKey).then(function(data) {
+        console.log("tx Signed")
+        web3.eth.sendSignedTransaction(data.rawTransaction).on("receipt", function(receipt) {
+            console.log(receipt)
+            tx11()
+        }).on('error', function(error){
+            console.log(error)
+        })
+    }); 
+}
+
+function tx11() {
+    var encodedABI = TreeContract.methods.grantRole(web3.utils.keccak256("UPG_ROLE"), TreeUpgAddress).encodeABI();
+    var tx = {
+        from: account.address,
+        to: TreeAddress,
+        gasPrice: 1000000000000,
+        gasLimit: 1000000,
+        data: encodedABI,
+    };
+    console.log("starting tx 11")
+    web3.eth.accounts.signTransaction(tx, account.privateKey).then(function(data) {
+        console.log("tx Signed")
+        web3.eth.sendSignedTransaction(data.rawTransaction).on("receipt", function(receipt) {
+            console.log(receipt)
+        }).on('error', function(error){
+            console.log(error)
+        })
+    });
+}
+
+
+
 tx1()
 
