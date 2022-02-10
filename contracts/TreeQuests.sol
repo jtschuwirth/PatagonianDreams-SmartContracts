@@ -12,7 +12,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     event StartQuest(uint treeId, uint questId);
     event CompleteQuest(uint treeId, uint questId);
-    event CancelQuest(uint treeId, uint questId);
+    event CancelQuest(uint treeId);
 
     address TreasuryAddress;
     address TreeAddress;
@@ -53,6 +53,16 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     //Payable Functions
 
+    function questLength(uint treeId, uint questId) public view returns (uint){
+        uint length;
+        if (questId == 1) {
+            length = 1*60 - tree.treeBranches(treeId)*1;
+        } else if (questId == 2) {
+            length = 1*60 - tree.treeBranches(treeId)*1;
+        }
+        return length;
+    }
+
     function startQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) == 0);
         require(tree.currentAction(treeId) == 0);
@@ -65,6 +75,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     function completeQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) != 0);
+        require(block.timestamp >= tree.actionStatus(treeId));
         if (questId == 1) {
             completeQuest1(treeId);
         } else if (questId == 2) {
@@ -72,70 +83,61 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
         }
     }
 
-    function cancelQuest(uint treeId, uint questId) public payable onlyOwnerOf(treeId) {
+    function cancelQuest(uint treeId) public payable onlyOwnerOf(treeId) {
         require(tree.actionStatus(treeId) != 0);
-        if (questId == 1) {
-            cancelQuest1(treeId);
-        } else if (questId == 2) {
-            cancelQuest2(treeId);
-        }
+        tree.updateAction(treeId, 0, 0);
+        emit CancelQuest(treeId);
     }
 
     function startQuest1(uint treeId) internal {
-        uint questDuration = 1*60 - tree.treeBranches(treeId)*1;
-        tree.updateAction(treeId, 1, block.timestamp+questDuration);
+        uint length = questLength(treeId, 1);
+        tree.updateAction(treeId, 1, block.timestamp+length);
         emit StartQuest(treeId, 1);
     }
 
     function completeQuest1(uint treeId) internal {
         require(tree.currentAction(treeId) == 1);
-        require(block.timestamp >= tree.actionStatus(treeId));
 
         uint expReward = 100;
-        uint tokenReward = (10**18)*tree.treeRoots(treeId)*110/100;
-        require(1000000000*10**18 >= pudu.totalSupply()+tokenReward);
+        uint tokenReward = (10**18)+(10**18)*tree.treeRoots(treeId)*10/100;
 
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
-        pudu.mint(msg.sender, tokenReward);
-
+        if (1000000000*10**18 >= pudu.totalSupply()+tokenReward) {
+            pudu.mint(msg.sender, tokenReward);
+        }
         emit CompleteQuest(treeId, 1);
 
     }
 
-    function cancelQuest1(uint treeId) internal {
-        require(tree.currentAction(treeId) == 1);
-        tree.updateAction(treeId, 0, 0);
-        emit CancelQuest(treeId, 1);
-
-    }
-
     function startQuest2(uint treeId) internal {
-        uint questDuration = 10*60 - tree.treeBranches(treeId)*1*60;
-        tree.updateAction(treeId, 2, block.timestamp+questDuration);
+        uint length = questLength(treeId, 2);
+        tree.updateAction(treeId, 2, block.timestamp+length);
         emit StartQuest(treeId, 2);
     }
 
     function completeQuest2(uint treeId) internal {
         require(tree.currentAction(treeId) == 2);
-        require(block.timestamp >= tree.actionStatus(treeId));
 
         uint expReward = 100;
-        uint rand = uint(keccak256(abi.encodePacked(vrf())));
-        uint chance = rand%10;
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
-        if (chance == 0) {
-            gameItems.mint(msg.sender, 0, 1);
+        uint rand1 = uint(keccak256(abi.encodePacked(vrf())));
+        uint chance1 = rand1%100;
+        if (chance1 < 50) {
+            gameItems.mint(msg.sender, 0, 5);
+        }
+        uint rand2 = uint(keccak256(abi.encodePacked(vrf())));
+        uint chance2 = rand2%100;
+        if (chance2 < 25) {
+            gameItems.mint(msg.sender, 1, 5);
+        }
+        uint rand3 = uint(keccak256(abi.encodePacked(vrf())));
+        uint chance3 = rand3%100;
+        if (chance3 < 10) {
+            gameItems.mint(msg.sender, 2, 5);
         }
         emit CompleteQuest(treeId, 2);
-
-    }
-
-    function cancelQuest2(uint treeId) internal {
-        require(tree.currentAction(treeId) == 2);
-        tree.updateAction(treeId, 0, 0);
-        emit CancelQuest(treeId, 2);
 
     }
 

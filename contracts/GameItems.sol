@@ -8,6 +8,7 @@ import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/ERC115
 contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
 
     uint256 public constant BasicRune = 0;
     uint256 public constant IntricateRune = 1;
@@ -23,5 +24,9 @@ contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
 
     function mint(address _address, uint itemId, uint amount) public payable onlyRole(MINTER_ROLE) {
         _mint(_address, itemId, amount, "");
+    }
+
+    function burn(address from, uint id, uint amount) public payable onlyRole(BURNER_ROLE) {
+        _burn(from, id, amount);
     }
 }

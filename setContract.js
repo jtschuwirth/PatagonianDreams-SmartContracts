@@ -198,11 +198,31 @@ function tx8() {
         console.log("tx Signed")
         web3.eth.sendSignedTransaction(data.rawTransaction).on("receipt", function(receipt) {
             console.log(receipt)
+            tx9()
         }).on('error', function(error){
             console.log(error)
         })
     }); 
 
+}
+function tx9() {
+    var encodedABI = GameItemsContract.methods.grantRole(web3.utils.keccak256("BURNER_ROLE"), TreeAddress).encodeABI();
+    var tx = {
+        from: account.address,
+        to: GameItemsAddress,
+        gasPrice: 1000000000000,
+        gasLimit: 1000000,
+        data: encodedABI,
+    };
+    console.log("starting tx 9")
+    web3.eth.accounts.signTransaction(tx, account.privateKey).then(function(data) {
+        console.log("tx Signed")
+        web3.eth.sendSignedTransaction(data.rawTransaction).on("receipt", function(receipt) {
+            console.log(receipt)
+        }).on('error', function(error){
+            console.log(error)
+        })
+    });
 }
 tx1()
 
