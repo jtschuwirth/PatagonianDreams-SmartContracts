@@ -28,14 +28,14 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
         require(tree.treeLevel(treeId) < 100 );
         require(tree.treeExp(treeId) >= tree.treeLevel(treeId)*100);
         require(tree.currentAction(treeId) == 0);
-        tree.gainLevel(treeId);
+        tree.gainLevel(treeId, msg.sender);
     }
 
     function lvlUpStat(uint treeId, uint statId) internal {
         if (statId == 0) {
-            tree.levelUpRoots(treeId);
+            tree.levelUpRoots(treeId, msg.sender);
         } else if (statId == 1) {
-            tree.levelUpBranches(treeId);
+            tree.levelUpBranches(treeId, msg.sender);
         }
     }
 
@@ -74,8 +74,8 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
             require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
             require(gameItems.balanceOf(msg.sender, 2) >= PowerfullRuneAmount);
             gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            gameItems.burn(msg.sender, 0, IntricateRuneAmount);
-            gameItems.burn(msg.sender, 0, PowerfullRuneAmount);
+            gameItems.burn(msg.sender, 1, IntricateRuneAmount);
+            gameItems.burn(msg.sender, 2, PowerfullRuneAmount);
             lvlUpStat(treeId, statId);
         }
     }

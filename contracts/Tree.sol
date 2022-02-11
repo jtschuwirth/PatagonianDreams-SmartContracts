@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.3;
 
-import "./AbstractGameItems.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -113,11 +112,11 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
 
     //Public Functions
 
-    function gainLevel(uint treeId) public onlyRole(UPG_ROLE) {
+    function gainLevel(uint treeId, address user) public onlyRole(UPG_ROLE) {
         uint amount = trees[treeId].level*10**18;
-        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
+        require(IERC20(TokenAddress).balanceOf(user)>= amount);
+        IERC20(TokenAddress).transferFrom(user, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(user, DevelopmentAddress, amount*4/100);
         trees[treeId].exp = trees[treeId].exp-trees[treeId].level*100;
         trees[treeId].level++;
         emit GainLevel(treeId);
@@ -128,19 +127,19 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         emit GainExp(treeId, amount);
     }
 
-    function levelUpBranches(uint treeId) public onlyRole(UPG_ROLE) {
+    function levelUpBranches(uint treeId, address user) public onlyRole(UPG_ROLE) {
         uint amount = trees[treeId].branches*10**18;
-        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
+        require(IERC20(TokenAddress).balanceOf(user)>= amount);
+        IERC20(TokenAddress).transferFrom(user, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(user, DevelopmentAddress, amount*4/100);
         trees[treeId].branches++;
         emit StatLevelUp (treeId, 0);
     }
-    function levelUpRoots(uint treeId) public onlyRole(UPG_ROLE) {
+    function levelUpRoots(uint treeId, address user) public onlyRole(UPG_ROLE) {
         uint amount = trees[treeId].roots*10**18;
-        require(IERC20(TokenAddress).balanceOf(msg.sender)>= amount);
-        IERC20(TokenAddress).transferFrom(msg.sender, TreasuryAddress, amount*96/100);
-        IERC20(TokenAddress).transferFrom(msg.sender, DevelopmentAddress, amount*4/100);
+        require(IERC20(TokenAddress).balanceOf(user)>= amount);
+        IERC20(TokenAddress).transferFrom(user, TreasuryAddress, amount*96/100);
+        IERC20(TokenAddress).transferFrom(user, DevelopmentAddress, amount*4/100);
         trees[treeId].roots++;
         emit StatLevelUp (treeId, 1);
     }
