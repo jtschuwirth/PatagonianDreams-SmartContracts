@@ -3,7 +3,7 @@
 pragma solidity ^0.8.3;
 import "./AbstractTree.sol";
 import "./AbstractGameItems.sol";
-import "./AbstractPudu.sol";
+import "./AbstractPTG.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -22,7 +22,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     AbstractTree tree;
     AbstractGameItems gameItems;
-    AbstractPudu pudu;
+    AbstractPTG PTG;
 
     modifier onlyOwnerOf(uint _treeId) {
         require(tree.ownerOf(_treeId) == msg.sender);
@@ -102,8 +102,8 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
-        if (1000000000*10**18 >= pudu.totalSupply()+tokenReward) {
-            pudu.mint(msg.sender, tokenReward);
+        if (1000000000*10**18 >= PTG.totalSupply()+tokenReward) {
+            PTG.mint(msg.sender, tokenReward);
         }
         emit CompleteQuest(treeId, 1);
 
@@ -148,7 +148,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
 
     function transferTokenAddress(address newToken) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TokenAddress = newToken;
-        pudu = AbstractPudu(TokenAddress);
+        PTG = AbstractPTG(TokenAddress);
     }
 
     function transferGameItemsAddress(address newGameItems) public onlyRole(DEFAULT_ADMIN_ROLE) {

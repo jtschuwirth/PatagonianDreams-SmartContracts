@@ -6,10 +6,10 @@ import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 
-contract Pudu is ERC20, AccessControl {
+contract PTG is ERC20, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor() ERC20("Pudu", "PUDU") {
+    constructor() ERC20("Patagonian Gem", "PTG") {
         _mint(msg.sender, 20000000*10**18);
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }

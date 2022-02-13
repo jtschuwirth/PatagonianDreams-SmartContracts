@@ -14,7 +14,7 @@ var TreeABI = TreeJson["abi"];
 var TreeAddress = TreeJson["networks"]["2"]["address"];
 var TreeContract = new web3.eth.Contract(TreeABI, TreeAddress);
 
-var TokenJson = require("./build/contracts/Pudu.json");
+var TokenJson = require("./build/contracts/PTG.json");
 var TokenABI = TokenJson["abi"];
 var TokenAddress = TokenJson["networks"]["2"]["address"];
 var TokenContract = new web3.eth.Contract(TokenABI, TokenAddress);
@@ -272,8 +272,6 @@ function tx11() {
         })
     });
 }
-
-
 
 tx1()
 
