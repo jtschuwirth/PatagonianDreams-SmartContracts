@@ -10,9 +10,15 @@ import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initiali
 
 contract Marketplace is Initializable, AccessControlUpgradeable, ERC1155Holder {
 
-    event NewOffer(uint offerId);
-    event OfferCancelled(uint offerId);
-    event OfferUpdated(uint offerId);
+    event OfferUpdated(
+        uint offerId,
+        address owner,
+        uint itemId,
+        uint originalAmount,
+        uint currentAmount,
+        uint price,
+        string status
+        );
 
     address GameItemsAddress;
     address TokenAddress;
@@ -72,9 +78,9 @@ contract Marketplace is Initializable, AccessControlUpgradeable, ERC1155Holder {
     function CreateOffer(uint itemId, uint itemQnt, uint price) public {
         require(gameItems.balanceOf(msg.sender, itemId) >= itemQnt);
         gameItems.safeTransferFrom(msg.sender, address(this), itemId, itemQnt, "");
+        uint offerId = offers.length;
         offers.push(Offer(msg.sender, itemId, itemQnt, itemQnt, price, "Open"));
-        uint id = offers.length;
-        emit NewOffer(id);
+        emit OfferUpdated(offerId, msg.sender, itemId, itemQnt, itemQnt, price, "Open");
     }
 
     function CancelOffer(uint offerId) public {
@@ -82,7 +88,7 @@ contract Marketplace is Initializable, AccessControlUpgradeable, ERC1155Holder {
         require(keccak256(abi.encodePacked(offers[offerId].status)) == keccak256(abi.encodePacked("Open")));
         offers[offerId].status = "Cancelled";
         gameItems.safeTransferFrom(address(this), msg.sender, offers[offerId].itemId, offers[offerId].currentAmount, "");
-        emit OfferCancelled(offerId);
+        emit OfferUpdated(offerId, offers[offerId].owner, offers[offerId].itemId, offers[offerId].originalAmount, offers[offerId].currentAmount, offers[offerId].price, offers[offerId].status);
     }
 
     function AcceptOffer(uint offerId, uint itemQnt) public {
@@ -99,7 +105,7 @@ contract Marketplace is Initializable, AccessControlUpgradeable, ERC1155Holder {
         PTG.transferFrom(msg.sender, offers[offerId].owner, totalPrice*96/100);
         PTG.transferFrom(msg.sender, GameDevAddress, totalPrice*4/100);
         gameItems.safeTransferFrom(address(this), msg.sender, offers[offerId].itemId, itemQnt, "");
-        emit OfferUpdated(offerId);
+        emit OfferUpdated(offerId, offers[offerId].owner, offers[offerId].itemId, offers[offerId].originalAmount, offers[offerId].currentAmount, offers[offerId].price, offers[offerId].status);
 
     }
 

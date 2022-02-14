@@ -179,6 +179,26 @@
       "address": "0x2A61F47E886fd22EafB030E1fBe273172964D51e",
       "txHash": "0xa80fa5d8a8449abc1bc5ea1e5876f5bb625b0d548abec7b9856697e8e1c3e35d",
       "kind": "transparent"
+    },
+    {
+      "address": "0xA1069F6B9DDf781db69B6a4bf525892e162D6fC9",
+      "txHash": "0x0f271d3534d73c587b190b58773891af0c966dbed0c96a5864aca146d75573f2",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xFCF55b77946454165378e777dfCa35A7630bCDB5",
+      "txHash": "0x5f717b7bcca3108925fd88abcdd16241e571d01971a06e2f2723a3394f88444e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8f116E7566fC7fFCaFFBEeeADF8B529607D043A4",
+      "txHash": "0x957495bb93f1068b5e6ff0dad55f839aa29f73aa942725ec2f81e9f528b725d0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xeebe6Bf2f7659ddE0Bb779D611F6Ef684D1f01f4",
+      "txHash": "0xa0e61eb9ef678e0a77927853c048c0eab2d26307fd675c4d203ff1fbd4fe7b53",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -4720,6 +4740,646 @@
             "label": "bytes32"
           },
           "t_struct(RoleData)2640_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "4249aca3cd4fcee2d1b6691b999df41c6b6833e6763ddb95cd3ae4356236d77b": {
+      "address": "0x2791D00F0cBF17B29216123013b870E5D79F933f",
+      "txHash": "0xd63312c6fd24651ee47eda7b09b419bbac1eff6d61f566feecf3b12f87b8e494",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC165Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:36"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)2716_storage)",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:64"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:232"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameItemsAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:23"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "TokenAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:24"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameDevAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:25"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "offers",
+            "type": "t_array(t_struct(Offer)305_storage)dyn_storage",
+            "src": "..\\project:\\contracts\\Marketplace.sol:36"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "gameItems",
+            "type": "t_contract(AbstractGameItems)23",
+            "src": "..\\project:\\contracts\\Marketplace.sol:37"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "PTG",
+            "type": "t_contract(AbstractPTG)57",
+            "src": "..\\project:\\contracts\\Marketplace.sol:38"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Offer)305_storage)dyn_storage": {
+            "label": "struct Marketplace.Offer[]"
+          },
+          "t_struct(Offer)305_storage": {
+            "label": "struct Marketplace.Offer",
+            "members": [
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "itemId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "originalAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "currentAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_string_storage"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_contract(AbstractGameItems)23": {
+            "label": "contract AbstractGameItems"
+          },
+          "t_contract(AbstractPTG)57": {
+            "label": "contract AbstractPTG"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)2716_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)2716_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "179303c948cace37286cbcc5e5a578f227a214f8c5c0f9225dd87eee8af97a70": {
+      "address": "0x8C21417CF865960931dc510c34bC57CC6042b0F0",
+      "txHash": "0xaa8ce8b1e7884a03f7770ef5468d635b47a5c21b5892d6e9497c4079b18317b1",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC165Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:36"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)2683_storage)",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:64"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:232"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameItemsAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:23"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "TokenAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:24"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameDevAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:25"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "offers",
+            "type": "t_array(t_struct(Offer)305_storage)dyn_storage",
+            "src": "..\\project:\\contracts\\Marketplace.sol:36"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "gameItems",
+            "type": "t_contract(AbstractGameItems)23",
+            "src": "..\\project:\\contracts\\Marketplace.sol:37"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "PTG",
+            "type": "t_contract(AbstractPTG)57",
+            "src": "..\\project:\\contracts\\Marketplace.sol:38"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Offer)305_storage)dyn_storage": {
+            "label": "struct Marketplace.Offer[]"
+          },
+          "t_struct(Offer)305_storage": {
+            "label": "struct Marketplace.Offer",
+            "members": [
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "itemId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "originalAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "currentAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_string_storage"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_contract(AbstractGameItems)23": {
+            "label": "contract AbstractGameItems"
+          },
+          "t_contract(AbstractPTG)57": {
+            "label": "contract AbstractPTG"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)2683_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)2683_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "1df450de30c9437601af8227ece9b7f09f8e00c514193d1262e99004cebae8e6": {
+      "address": "0x3c974144BD7D65C1b7D2A701F86D3E54689b8eb7",
+      "txHash": "0xc0b9d8555076433322f13503a6d7879e8cb299696b96b6d916111f6ac70bff96",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC165Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:36"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)2716_storage)",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:64"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:232"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameItemsAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:23"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "TokenAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:24"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameDevAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:25"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "offers",
+            "type": "t_array(t_struct(Offer)305_storage)dyn_storage",
+            "src": "..\\project:\\contracts\\Marketplace.sol:36"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "gameItems",
+            "type": "t_contract(AbstractGameItems)23",
+            "src": "..\\project:\\contracts\\Marketplace.sol:37"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "PTG",
+            "type": "t_contract(AbstractPTG)57",
+            "src": "..\\project:\\contracts\\Marketplace.sol:38"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Offer)305_storage)dyn_storage": {
+            "label": "struct Marketplace.Offer[]"
+          },
+          "t_struct(Offer)305_storage": {
+            "label": "struct Marketplace.Offer",
+            "members": [
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "itemId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "originalAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "currentAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_string_storage"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_contract(AbstractGameItems)23": {
+            "label": "contract AbstractGameItems"
+          },
+          "t_contract(AbstractPTG)57": {
+            "label": "contract AbstractPTG"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)2716_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)2716_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "2d0a6da056a58aa0862a9ffa128694104bf170d3092a5e9647e120ed561d0871": {
+      "address": "0xa07137bA719A166A770ec993FC4FC5496ebFd36C",
+      "txHash": "0x86f19dc3f3d6db2207fd4731a0271630f10987275c938155f29a080c11491c55",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC165Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:36"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)2699_storage)",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:64"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol:232"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameItemsAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:23"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "TokenAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:24"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "GameDevAddress",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\Marketplace.sol:25"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "offers",
+            "type": "t_array(t_struct(Offer)305_storage)dyn_storage",
+            "src": "..\\project:\\contracts\\Marketplace.sol:36"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "gameItems",
+            "type": "t_contract(AbstractGameItems)23",
+            "src": "..\\project:\\contracts\\Marketplace.sol:37"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "PTG",
+            "type": "t_contract(AbstractPTG)57",
+            "src": "..\\project:\\contracts\\Marketplace.sol:38"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Offer)305_storage)dyn_storage": {
+            "label": "struct Marketplace.Offer[]"
+          },
+          "t_struct(Offer)305_storage": {
+            "label": "struct Marketplace.Offer",
+            "members": [
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "itemId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "originalAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "currentAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_string_storage"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_contract(AbstractGameItems)23": {
+            "label": "contract AbstractGameItems"
+          },
+          "t_contract(AbstractPTG)57": {
+            "label": "contract AbstractPTG"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)2699_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)2699_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
