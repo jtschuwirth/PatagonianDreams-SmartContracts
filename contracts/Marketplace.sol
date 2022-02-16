@@ -38,7 +38,7 @@ contract Marketplace is Initializable, AccessControlUpgradeable, ERC1155Holder {
     AbstractPTG PTG;
 
     function initialize() initializer public {
-        GameDevAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
+        GameDevAddress = 0x7C50D01C7Ba0EDE836bDA6daC88A952f325756e3;
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 

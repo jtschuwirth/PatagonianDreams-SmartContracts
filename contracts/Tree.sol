@@ -20,8 +20,8 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     uint Digits;
     uint Modulus;
 
-    address DevelopmentAddress;
-    address TreasuryAddress;
+    address payable DevelopmentAddress;
+    address payable TreasuryAddress;
     address TokenAddress;
 
     struct TreeStruct {
@@ -46,8 +46,8 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         Digits = 16;
         Modulus = 10 ** Digits;
 
-        DevelopmentAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
-        TreasuryAddress = 0xfd768E668A158C173e9549d1632902C2A4363178;
+        DevelopmentAddress = payable(0x7C50D01C7Ba0EDE836bDA6daC88A952f325756e3);
+        TreasuryAddress = payable(0xa691623968855b91A066661b0552a7D3764c9a64);
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         __ERC721_init("Patagonic Tree", "PTREE");
     }
@@ -97,7 +97,11 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     function currentPrice() public view returns (uint) {
-        return (trees.length+1)*10**18;
+        uint basePrice = 1;
+        uint scalingPrice = 1;
+        uint scalingAmount = 5;
+        uint price = (basePrice*10**18)+(trees.length/scalingAmount)*scalingPrice*10**18;
+        return price;
     }
 
     function _generateRandomDNA() internal view returns (uint) {
@@ -153,22 +157,34 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
 
     function createNewTree() public payable {
         require(msg.sender != address(0) && msg.sender != address(this));
-        require(msg.value >= currentPrice());
+        require(msg.value == currentPrice());
         uint id = trees.length;
         uint DNA = _generateRandomDNA();
         trees.push(TreeStruct(DNA, 1, 0, 1, 1, 0, 0));
         _mint(msg.sender, id);
+        retrieveFunds(id);
         emit NewTree(id);
 
     }
 
+    //Retrive Funds
+
+    function retrieveFunds(uint treeId) internal {
+        if (treeId < 2000) {
+            TreasuryAddress.transfer(payable(address(this)).balance/2);
+            DevelopmentAddress.transfer(payable(address(this)).balance/2);
+        } else {
+            TreasuryAddress.transfer(payable(address(this)).balance);
+        }
+    }
+
     //Transfer Functions
 
-    function transferDevelopmentAddress(address newDevelopment) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferDevelopmentAddress(address payable newDevelopment) public onlyRole(DEFAULT_ADMIN_ROLE) {
         DevelopmentAddress = newDevelopment;
     }
 
-    function transferTreasuryAddress(address newTreasury) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferTreasuryAddress(address payable newTreasury) public onlyRole(DEFAULT_ADMIN_ROLE) {
         TreasuryAddress = newTreasury;
     }
 

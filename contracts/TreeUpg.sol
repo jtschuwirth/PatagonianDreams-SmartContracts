@@ -51,30 +51,21 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
         require(21 > stat);
         require(tree.currentAction(treeId) == 0);
         
-        if (stat > 0 && stat < 2) {
+        if (stat < 6) {
             lvlUpStat(treeId, statId);
-        } else if (stat > 1 && stat < 3) {
-            uint BasicRuneAmount = (stat);
+        } else if (stat < 11) {
+            uint BasicRuneAmount = stat-5;
             require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
             gameItems.burn(msg.sender, 0, BasicRuneAmount);
             lvlUpStat(treeId, statId);
-        } else if (stat > 2 && stat < 5) {
-            uint BasicRuneAmount = (stat);
-            uint IntricateRuneAmount = (stat);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
+        } else if (stat < 16) {
+            uint IntricateRuneAmount = stat-10;
             require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
             gameItems.burn(msg.sender, 1, IntricateRuneAmount);
             lvlUpStat(treeId, statId);
-        } else if (stat > 3 && stat < 21) {
-            uint BasicRuneAmount = (stat);
-            uint IntricateRuneAmount = (stat);
-            uint PowerfullRuneAmount = (stat);
-            require(gameItems.balanceOf(msg.sender, 0) >= BasicRuneAmount);
-            require(gameItems.balanceOf(msg.sender, 1) >= IntricateRuneAmount);
+        } else if (stat < 21) {
+            uint PowerfullRuneAmount = stat-15;
             require(gameItems.balanceOf(msg.sender, 2) >= PowerfullRuneAmount);
-            gameItems.burn(msg.sender, 0, BasicRuneAmount);
-            gameItems.burn(msg.sender, 1, IntricateRuneAmount);
             gameItems.burn(msg.sender, 2, PowerfullRuneAmount);
             lvlUpStat(treeId, statId);
         }

@@ -58,6 +58,8 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
             length = 1*60 - tree.treeBranches(treeId)*1;
         } else if (questId == 2) {
             length = 1*60 - tree.treeBranches(treeId)*1;
+        } else if (questId == 3) {
+            length = 1*60 - tree.treeBranches(treeId)*1;
         }
         return length;
     }
@@ -69,6 +71,8 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
             startQuest1(treeId);
         } else if (questId == 2) {
             startQuest2(treeId);
+        } else if (questId == 3) {
+            startQuest3(treeId);
         }
     }
 
@@ -79,6 +83,8 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
             completeQuest1(treeId);
         } else if (questId == 2) {
             completeQuest2(treeId);
+        }  else if (questId == 3) {
+            completeQuest3(treeId);
         }
     }
 
@@ -137,6 +143,28 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
             gameItems.mint(msg.sender, 2, 5);
         }
         emit CompleteQuest(treeId, 2);
+
+    }
+
+    function startQuest3(uint treeId) internal {
+        uint length = questLength(treeId, 3);
+        tree.updateAction(treeId, 3, block.timestamp+length);
+        emit StartQuest(treeId, 3);
+    }
+
+    function completeQuest3(uint treeId) internal {
+        require(tree.currentAction(treeId) == 3);
+
+        uint expReward = 100000;
+        uint base = 100;
+        uint tokenReward = base*(10**18)+base*(10**18)*tree.treeRoots(treeId)*10/100;
+
+        tree.updateAction(treeId, 0, 0);
+        tree.gainExp(treeId, expReward);
+        if (1000000000*10**18 >= PTG.totalSupply()+tokenReward) {
+            PTG.mint(msg.sender, tokenReward);
+        }
+        emit CompleteQuest(treeId, 3);
 
     }
 
