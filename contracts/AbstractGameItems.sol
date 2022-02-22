@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.3;
 
-import "../node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 
-abstract contract AbstractGameItems is ERC1155 {
+abstract contract AbstractGameItems is ERC1155Upgradeable {
 
     function mint(address _address, uint itemId, uint amount) public virtual;
 

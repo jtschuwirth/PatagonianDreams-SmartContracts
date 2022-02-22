@@ -4,8 +4,8 @@ pragma solidity ^0.8.3;
 
 import "./AbstractTree.sol";
 import "./AbstractGameItems.sol";
-import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 contract TreeUpg is Initializable, AccessControlUpgradeable {
 

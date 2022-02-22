@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.3;
 
-import "../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "../node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 
 contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
 

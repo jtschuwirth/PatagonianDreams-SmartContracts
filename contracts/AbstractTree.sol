@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.0;
 
-import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
-abstract contract AbstractTree is ERC721 {
+abstract contract AbstractTree is ERC721Upgradeable {
     //View Functions
 
     function getTree(uint256 treeId) external view virtual returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256);
