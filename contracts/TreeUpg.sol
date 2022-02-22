@@ -25,9 +25,9 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
     }
 
     function upgradeLevel(uint treeId) public payable onlyOwnerOf(treeId) {
-        require(tree.treeLevel(treeId) < 100 );
-        require(tree.treeExp(treeId) >= tree.treeLevel(treeId)*100);
-        require(tree.currentAction(treeId) == 0);
+        require(tree.getLevel(treeId) < 100 );
+        require(tree.getExp(treeId) >= tree.getLevel(treeId)*100);
+        require(tree.getAction(treeId) == 0);
         tree.gainLevel(treeId, msg.sender);
     }
 
@@ -42,14 +42,14 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
     function upgradeStat(uint treeId, uint statId) public payable onlyOwnerOf(treeId) {
         uint stat;
         if (statId == 0) {
-            stat = tree.treeRoots(treeId);
+            stat = tree.getRoots(treeId);
         } else if (statId == 1) {
-            stat = tree.treeBranches(treeId);
+            stat = tree.getBranches(treeId);
         }
 
-        require(tree.treeLevel(treeId) > stat);
+        require(tree.getLevel(treeId) > stat);
         require(21 > stat);
-        require(tree.currentAction(treeId) == 0);
+        require(tree.getAction(treeId) == 0);
         
         if (stat < 6) {
             lvlUpStat(treeId, statId);

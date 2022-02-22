@@ -74,6 +74,32 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         return (tree.treeDNA, tree.level, tree.exp, tree.roots, tree.branches, tree.action, tree.onActionUntil);
     }
 
+    function getBranches(uint256 treeId) external view returns (uint256) {
+        return trees[treeId].branches;
+    }
+
+    function getRoots(uint256 treeId) external view returns (uint256) {
+        return trees[treeId].roots;
+    }
+
+
+    function getLevel(uint256 treeId) external view returns (uint256) {
+        return trees[treeId].level;
+    }
+
+    function getExp(uint256 treeId) external view returns (uint256) {
+        return trees[treeId].exp;
+    }
+
+
+    function getAction(uint256 treeId) external view returns (uint256) {
+        return trees[treeId].action;
+    }
+
+    function getActionUntil(uint256 treeId) external view returns (uint256) {
+        return trees[treeId].onActionUntil;
+    }
+
     function currentPrice() public view returns (uint256) {
         uint256 basePrice = 1;
         uint256 scalingPrice = 1;

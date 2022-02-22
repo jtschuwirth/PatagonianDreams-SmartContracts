@@ -9,6 +9,18 @@ abstract contract AbstractTree is ERC721 {
 
     function getTree(uint256 treeId) external view virtual returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256);
 
+    function getBranches(uint256 treeId) external view virtual returns (uint256);
+
+    function getRoots(uint256 treeId) external view virtual returns (uint256);
+
+    function getLevel(uint256 treeId) external view virtual returns (uint256);
+
+    function getExp(uint256 treeId) external view virtual returns (uint256);
+
+    function getAction(uint256 treeId) external view virtual returns (uint256);
+
+    function getActionUntil(uint256 treeId) external view virtual returns (uint256);
+
     function currentPrice() public view virtual returns (uint256);
 
     function getTreeQuantities() external view virtual returns (uint256);

@@ -55,18 +55,18 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     function questLength(uint treeId, uint questId) public view returns (uint){
         uint length;
         if (questId == 1) {
-            length = 1*60 - tree.treeBranches(treeId)*1;
+            length = 1*60 - tree.getBranches(treeId)*1;
         } else if (questId == 2) {
-            length = 1*60 - tree.treeBranches(treeId)*1;
+            length = 1*60 - tree.getBranches(treeId)*1;
         } else if (questId == 3) {
-            length = 1*60 - tree.treeBranches(treeId)*1;
+            length = 1*60 - tree.getBranches(treeId)*1;
         }
         return length;
     }
 
     function startQuest(uint treeId, uint questId) public onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) == 0);
-        require(tree.currentAction(treeId) == 0);
+        require(tree.getActionUntil(treeId) == 0);
+        require(tree.getAction(treeId) == 0);
         if (questId == 1) {
             startQuest1(treeId);
         } else if (questId == 2) {
@@ -77,8 +77,8 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     }
 
     function completeQuest(uint treeId, uint questId) public onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) != 0);
-        require(block.timestamp >= tree.actionStatus(treeId));
+        require(tree.getActionUntil(treeId) != 0);
+        require(block.timestamp >= tree.getAction(treeId));
         if (questId == 1) {
             completeQuest1(treeId);
         } else if (questId == 2) {
@@ -89,7 +89,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     }
 
     function cancelQuest(uint treeId) public onlyOwnerOf(treeId) {
-        require(tree.actionStatus(treeId) != 0);
+        require(tree.getActionUntil(treeId) != 0);
         tree.updateAction(treeId, 0, 0);
         emit CancelQuest(treeId);
     }
@@ -101,10 +101,10 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     }
 
     function completeQuest1(uint treeId) internal {
-        require(tree.currentAction(treeId) == 1);
+        require(tree.getAction(treeId) == 1);
 
         uint expReward = 100;
-        uint tokenReward = (10**18)+(10**18)*tree.treeRoots(treeId)*10/100;
+        uint tokenReward = (10**18)+(10**18)*tree.getRoots(treeId)*10/100;
 
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
@@ -122,7 +122,7 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     }
 
     function completeQuest2(uint treeId) internal {
-        require(tree.currentAction(treeId) == 2);
+        require(tree.getAction(treeId) == 2);
 
         uint expReward = 100;
         tree.updateAction(treeId, 0, 0);
@@ -153,11 +153,11 @@ contract TreeQuests is Initializable, AccessControlUpgradeable {
     }
 
     function completeQuest3(uint treeId) internal {
-        require(tree.currentAction(treeId) == 3);
+        require(tree.getAction(treeId) == 3);
 
         uint expReward = 100000;
         uint base = 100;
-        uint tokenReward = base*(10**18)+base*(10**18)*tree.treeRoots(treeId)*10/100;
+        uint tokenReward = base*(10**18)+base*(10**18)*tree.getRoots(treeId)*10/100;
 
         tree.updateAction(treeId, 0, 0);
         tree.gainExp(treeId, expReward);
