@@ -14,7 +14,7 @@ contract PTG is ERC20, AccessControl {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function mint(address _address, uint amount) public onlyRole(MINTER_ROLE) {
+    function mint(address _address, uint amount) public onlyRole("MINTER_ROLE") {
         require(1000000000*10**18 >= totalSupply()+amount);
         _mint(_address, amount);
     }

@@ -7,35 +7,25 @@ import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 abstract contract AbstractTree is ERC721 {
     //View Functions
 
-    function treeDNA(uint treeId) public virtual view returns (uint);
+    function getTree(uint256 treeId) external view virtual returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256);
 
-    function treeLevel(uint treeId) public virtual view returns (uint);
+    function currentPrice() public view virtual returns (uint256);
 
-    function treeExp(uint treeId) public virtual view returns (uint);
-
-    function treeRoots(uint treeId) public virtual view returns (uint);
-
-    function treeBranches(uint treeId) public virtual view returns (uint);
-
-    function actionStatus(uint treeId) public virtual view returns (uint);
-
-    function currentAction(uint treeId) public virtual view returns (uint);
-
-    function currentPrice() public virtual view returns (uint);
-
-    function treesQuantity() public virtual view returns (uint);
+    function getTreeQuantities() external view virtual returns (uint256);
 
     //Payable Functions
 
-    function levelUpRoots(uint treeId, address user) public virtual;
+    function gainLevel(uint256 treeId, address user) external virtual;
 
-    function levelUpBranches(uint treeId, address user) public virtual;
+    function gainExp(uint256 treeId, uint256 amount) external virtual;
 
-    function updateAction(uint treeId, uint action, uint value) public virtual;
+    function levelUpBranches(uint256  treeId, address user) external virtual;
 
-    function gainExp(uint treeId, uint amount) public virtual;
+    function levelUpRoots(uint256  treeId, address user) external virtual;
 
-    function gainLevel(uint treeId, address user) public virtual;
+    function updateAction(uint256 treeId, uint256 action, uint256 time) external virtual;
 
-    function createNewTree() public virtual;
+    function createNewTree() external payable virtual;
+
+    function retrieveFunds(uint256 treeId) internal virtual;
 }
