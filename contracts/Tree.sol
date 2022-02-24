@@ -37,7 +37,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     mapping(uint256 => TreeStruct) trees;
 
     using CountersUpgradeable for CountersUpgradeable.Counter;
-    CountersUpgradeable.Counter private offerCounter;
+    CountersUpgradeable.Counter private treeCounter;
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
         return super.supportsInterface(interfaceId);
@@ -50,7 +50,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         DevelopmentAddress = payable(0x7C50D01C7Ba0EDE836bDA6daC88A952f325756e3);
         TreasuryAddress = payable(0xa691623968855b91A066661b0552a7D3764c9a64);
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        __ERC721_init("Patagonic Tree", "PTREE");
+        __ERC721_init("Patagonic Tree", "pTree");
     }
 
     //Util Functions
@@ -104,7 +104,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         uint256 basePrice = 1;
         uint256 scalingPrice = 1;
         uint256 scalingAmount = 5;
-        uint256 price = (basePrice*10**18)+(offerCounter.current()/scalingAmount)*scalingPrice*10**18;
+        uint256 price = (basePrice*10**18)+(treeCounter.current()/scalingAmount)*scalingPrice*10**18;
         return price;
     }
 
@@ -114,7 +114,7 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     function getTreeQuantities() external view returns (uint256) {
-        return offerCounter.current();
+        return treeCounter.current();
     }
 
     //External Functions
@@ -162,8 +162,8 @@ contract Tree is ERC721Upgradeable, AccessControlUpgradeable {
         require(msg.sender != address(0) && msg.sender != address(this));
         require(msg.value == currentPrice());
         uint256 DNA = _generateRandomDNA();
-        uint256 current = offerCounter.current();
-        offerCounter.increment();
+        uint256 current = treeCounter.current();
+        treeCounter.increment();
         trees[current] = TreeStruct(DNA, 1, 0, 1, 1, 0, 0);
         _mint(msg.sender, current);
         retrieveFunds(current);
