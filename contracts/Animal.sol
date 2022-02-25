@@ -38,10 +38,6 @@ contract Animal is ERC721Upgradeable, AccessControlUpgradeable {
 
     constructor() initializer {}
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
-        return super.supportsInterface(interfaceId);
-    }
-
     function initialize() initializer public {
         Digits = 16;
         Modulus = 10 ** Digits;
@@ -50,6 +46,10 @@ contract Animal is ERC721Upgradeable, AccessControlUpgradeable {
         TreasuryAddress = payable(0xa691623968855b91A066661b0552a7D3764c9a64);
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         __ERC721_init("Patagonic Animal", "pAnimal");
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     //Util Functions
