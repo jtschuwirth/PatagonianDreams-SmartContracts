@@ -14,7 +14,9 @@ contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
     uint256 public constant IntricateRune = 1;
     uint256 public constant PowerfullRune = 2;
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC1155Upgradeable, AccessControlUpgradeable) returns (bool) {
+    constructor() initializer {}
+
+        function supportsInterface(bytes4 interfaceId) public view virtual override(ERC1155Upgradeable, AccessControlUpgradeable) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 

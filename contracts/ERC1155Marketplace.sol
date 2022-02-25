@@ -35,6 +35,8 @@ contract ERC1155Marketplace is Initializable, AccessControlUpgradeable, ERC1155H
     address PayoutAddress;
     IERC20Upgradeable token;
 
+    constructor() initializer {}
+
     function initialize(address Payout, address TokenAddress, address BaseERC1155Address) initializer public {
         PayoutAddress = Payout;
         Fee = 4;

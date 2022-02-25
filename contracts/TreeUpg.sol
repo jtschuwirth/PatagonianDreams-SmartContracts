@@ -20,6 +20,8 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
         _;
     }
 
+    constructor() initializer {}
+
     function initialize() initializer public {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
