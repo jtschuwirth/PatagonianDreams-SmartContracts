@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.3;
-import "./AbstractTree.sol";
-import "./AbstractGameItems.sol";
-import "./AbstractPTG.sol";
+import "./Abstracts/AbstractTree.sol";
+import "./Abstracts/AbstractGameItems.sol";
+import "./Abstracts/AbstractPTG.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
