@@ -9,8 +9,11 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract PTG is ERC20, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor() ERC20("Patagonian Gem", "PTG") {
-        _mint(msg.sender, 20000000*10**18);
+
+    constructor(address gameDevAddress, address liquidityAddress, address foundingTeamAddress) ERC20("Patagonian Gem", "PTG") {
+        _mint(gameDevAddress, 15000000*10**18);
+        _mint(liquidityAddress, 7500000*10**18);
+        _mint(foundingTeamAddress, 2500000*10**18);
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
