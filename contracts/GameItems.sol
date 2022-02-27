@@ -14,6 +14,7 @@ contract GameItems is ERC1155Upgradeable, AccessControlUpgradeable {
     uint256 public constant IntricateRune = 1;
     uint256 public constant PowerfullRune = 2;
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() initializer {}
 
     function initialize() initializer public {

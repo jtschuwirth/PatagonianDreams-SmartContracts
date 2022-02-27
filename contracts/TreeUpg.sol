@@ -20,6 +20,7 @@ contract TreeUpg is Initializable, AccessControlUpgradeable {
         _;
     }
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() initializer {}
 
     function initialize() initializer public {
